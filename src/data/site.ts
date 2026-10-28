@@ -57,8 +57,8 @@ export const TRUST_PHRASES = [
 export const STATS = [
   {
     value: 1000,
-    prefix: "~",
-    suffix: "",
+    prefix: "",
+    suffix: "+",
     label: "Services/Tickets Prepared Since 2019",
   },
   { value: 150, prefix: "", suffix: "+", label: "IRS Notices Resolved" },
@@ -115,7 +115,7 @@ export const HOME_CONTACT = {
   headingAccent: "What Comes Next.",
   intro:
     "Whether you’re an individual, entrepreneur or growing business, we’re here to help you stay compliant and confident. Share a few details and our team will get back to you shortly.",
-  replyNote: "We typically reply within 24 hours",
+  replyNote: "You’ll hear from us within one business day",
 };
 
 export const FAQ_INTRO =
@@ -380,7 +380,7 @@ export const CONTACT_PAGE = {
     "Questions to resolve. Decisions to make. We’re here to help—connect with us, we’re just a click away.",
   cta: "Talk to WorthPrime Tax",
   highlights: [
-    { title: "Quick Response", text: "We typically reply within 24 hours" },
+    { title: "Quick Response", text: "You’ll hear from us within one business day" },
     { title: "Trusted Experts", text: "U.S. Tax & Compliance Specialists" },
     { title: "Global Support", text: "Serving clients worldwide" },
   ],
@@ -429,7 +429,8 @@ export const INSIGHTS_PAGE = {
 /** Large closing CTA band, shown near the foot of every page. */
 export const CTA_BAND = {
   label: "From Setup to Success, We're With You",
-  heading: "Make Your Next Financial Decision With Confidence.",
+  heading:
+    "Whatever the next financial decision looks like, make it with perspective. From Setup to Success, We’re With You.",
   intro: "Tax guidance, business support, and financial clarity—built around you.",
   primary: "Talk to a Tax Expert",
   secondary: "Explore Our Services",

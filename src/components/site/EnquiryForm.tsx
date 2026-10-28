@@ -1,19 +1,21 @@
-import { useId, useState, type FormEvent, type ReactNode } from "react";
+import { useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   ArrowRight,
   Check,
   ChevronDown,
+  Clock,
   CircleAlert,
   Loader2,
   Mail,
-  Phone,
   User,
   type LucideIcon,
 } from "lucide-react";
+import { COUNTRY_CODES, DEFAULT_COUNTRY, getCountryCode } from "@/data/countryCodes";
 import { SERVICES } from "@/data/services";
-import { LINKS } from "@/data/site";
+import { HOME_CONTACT, LINKS } from "@/data/site";
 import {
   enquirySchema,
+  OTHER_SERVICE,
   submitEnquiry,
   type EnquiryField,
   type EnquiryInput,
@@ -25,8 +27,28 @@ type Values = Required<EnquiryInput>;
 type Errors = Partial<Record<EnquiryField, string>>;
 type FailedResult = Extract<EnquiryResult, { ok: false }>["error"];
 
-const EMPTY: Values = { name: "", email: "", phone: "", service: "", message: "", website: "" };
-const FIELD_ORDER: EnquiryField[] = ["name", "email", "phone", "service", "message"];
+const EMPTY: Values = {
+  name: "",
+  email: "",
+  phoneCountry: DEFAULT_COUNTRY,
+  phone: "",
+  service: "",
+  otherService: "",
+  message: "",
+  website: "",
+};
+const FIELD_ORDER: EnquiryField[] = [
+  "name",
+  "email",
+  "phone",
+  "service",
+  "otherService",
+  "message",
+];
+
+// DEMO ONLY: while ENQUIRY_WEBHOOK_URL is not set, show the success card even though nothing is
+// delivered. Set to false (or delete) before launch, or visitors will be told unsent messages were sent.
+const DEMO_SUCCESS_WHEN_NOT_CONFIGURED = true;
 
 const FAILURE_MESSAGES: Record<FailedResult, string> = {
   not_configured:
@@ -68,6 +90,7 @@ export function EnquiryForm({
   const [attempted, setAttempted] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [failure, setFailure] = useState<FailedResult>("delivery_failed");
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const Heading = headingLevel === 2 ? "h2" : "h3";
   const fieldId = (name: EnquiryField) => `${id}-${name}`;
@@ -95,7 +118,7 @@ export function EnquiryForm({
     setStatus("submitting");
     try {
       const result = await submitEnquiry({ data: values });
-      if (result.ok) {
+      if (result.ok || (DEMO_SUCCESS_WHEN_NOT_CONFIGURED && result.error === "not_configured")) {
         setStatus("success");
         return;
       }
@@ -119,35 +142,19 @@ export function EnquiryForm({
     compact ? "px-6 py-6 sm:px-10 sm:py-7" : "p-[clamp(1.25rem,2vw,2rem)]",
   );
   const inputClass = cn(fieldClass, compact && "py-2 text-[0.95rem]");
-
-  if (status === "success") {
-    return (
-      <div
-        className={cn(card, "flex min-h-[420px] flex-col items-center justify-center text-center")}
-        role="status"
-      >
-        <span className="grid size-14 place-items-center rounded-full bg-primary text-primary-foreground">
-          <Check className="size-7" aria-hidden />
-        </span>
-        <Heading className="mt-5 font-serif text-3xl">Thank You.</Heading>
-        <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
-          Your enquiry has been sent. A member of our team will get back to you soon.
-        </p>
-        <button
-          type="button"
-          onClick={reset}
-          className="mt-6 text-sm font-semibold text-primary underline-offset-4 hover:underline"
-        >
-          Send Another Enquiry
-        </button>
-      </div>
-    );
-  }
+  const selectedCountry = getCountryCode(values.phoneCountry);
 
   const submitting = status === "submitting";
+  const sent = status === "success";
 
-  return (
-    <form onSubmit={onSubmit} noValidate aria-busy={submitting} className={card}>
+  const front = (
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      aria-busy={submitting}
+      inert={sent}
+      className={cn(card, "backface-hidden [grid-area:1/1]")}
+    >
       {/* The compact (contact page) form opens straight with its heading: one line once the card is
           wide enough, sized to the card so it never overflows. */}
       {!compact && (
@@ -229,22 +236,50 @@ export function EnquiryForm({
           label="Phone"
           error={errors.phone}
           showLabel
-          icon={compact ? undefined : Phone}
         >
-          <input
-            id={fieldId("phone")}
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder={compact ? undefined : "Your phone number"}
-            required
-            value={values.phone}
-            onChange={(e) => update("phone", e.target.value)}
-            aria-invalid={errors.phone ? true : undefined}
-            aria-describedby={errors.phone ? errorId("phone") : undefined}
-            className={cn(inputClass, !compact && "pr-11")}
-          />
+          <div className="flex gap-2">
+            {/* Country code: the native select sits invisibly over a short "US +1" label, so the
+                field stays compact while the list still names each country. */}
+            <div
+              className={cn(
+                inputClass,
+                "relative flex w-auto shrink-0 items-center gap-1 pr-2 focus-within:border-primary",
+              )}
+            >
+              <span aria-hidden className="whitespace-nowrap">
+                {selectedCountry?.iso} {selectedCountry?.dial}
+              </span>
+              <ChevronDown className="size-3.5 text-primary" aria-hidden />
+              <select
+                name="phoneCountry"
+                aria-label="Country code"
+                autoComplete="tel-country-code"
+                value={values.phoneCountry}
+                onChange={(e) => update("phoneCountry", e.target.value)}
+                className="absolute inset-0 cursor-pointer opacity-0"
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c.iso} value={c.iso}>
+                    {c.name} ({c.dial})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <input
+              id={fieldId("phone")}
+              name="phone"
+              type="tel"
+              autoComplete="tel-national"
+              inputMode="tel"
+              placeholder={compact ? undefined : "Phone number"}
+              required
+              value={values.phone}
+              onChange={(e) => update("phone", e.target.value)}
+              aria-invalid={errors.phone ? true : undefined}
+              aria-describedby={errors.phone ? errorId("phone") : undefined}
+              className={cn(inputClass, "min-w-0 flex-1")}
+            />
+          </div>
         </Field>
         <Field
           id={fieldId("service")}
@@ -276,6 +311,9 @@ export function EnquiryForm({
                   {s.name}
                 </option>
               ))}
+              <option value={OTHER_SERVICE} className="text-foreground">
+                Others
+              </option>
             </select>
             <ChevronDown
               className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-primary"
@@ -283,6 +321,28 @@ export function EnquiryForm({
             />
           </div>
         </Field>
+        {values.service === OTHER_SERVICE && (
+          <Field
+            id={fieldId("otherService")}
+            errorId={errorId("otherService")}
+            label="Which Service Do You Need?"
+            error={errors.otherService}
+            showLabel
+            className="sm:col-span-2"
+          >
+            <input
+              id={fieldId("otherService")}
+              name="otherService"
+              placeholder={compact ? undefined : "Tell us the service you need"}
+              required
+              value={values.otherService}
+              onChange={(e) => update("otherService", e.target.value)}
+              aria-invalid={errors.otherService ? true : undefined}
+              aria-describedby={errors.otherService ? errorId("otherService") : undefined}
+              className={inputClass}
+            />
+          </Field>
+        )}
         <Field
           id={fieldId("message")}
           errorId={errorId("message")}
@@ -356,6 +416,62 @@ export function EnquiryForm({
         )}
       </button>
     </form>
+  );
+
+  // The form and the thank-you message are two faces of one card, stacked in the same grid cell
+  // (so the back face takes the form's height) and flipped over once the enquiry is delivered.
+  return (
+    <div className="grid perspective-[1600px]">
+      <div
+        className={cn(
+          "grid transition-transform duration-700 ease-in-out transform-3d",
+          sent && "rotate-y-180",
+        )}
+        onTransitionEnd={(e) => {
+          if (sent && e.target === e.currentTarget) successHeadingRef.current?.focus();
+        }}
+      >
+        {front}
+        <div
+          className={cn(
+            card,
+            "flex rotate-y-180 flex-col items-center justify-center text-center backface-hidden [grid-area:1/1]",
+          )}
+          role="status"
+          inert={!sent}
+        >
+          {sent && (
+            <>
+              <span className="grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-[0_12px_30px_-12px] shadow-primary/60">
+                <Check className="size-8" aria-hidden />
+              </span>
+              <Heading
+                ref={successHeadingRef}
+                tabIndex={-1}
+                className="mt-5 font-serif text-3xl outline-none"
+              >
+                Thank You!
+              </Heading>
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                Your enquiry has been sent successfully. A member of our team will get back to you
+                soon.
+              </p>
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary/8 px-4 py-2 text-sm font-semibold text-primary">
+                <Clock className="size-4" aria-hidden />
+                {HOME_CONTACT.replyNote}
+              </p>
+              <button
+                type="button"
+                onClick={reset}
+                className="mt-6 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                Send Another Enquiry
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

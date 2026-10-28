@@ -24,7 +24,7 @@ export function CtaBand() {
               <p className="text-xs font-medium tracking-[0.22em] text-hero-foreground/90 uppercase sm:text-[0.8rem]">
                 {CTA_BAND.label}
               </p>
-              <h2 className="mt-3 font-display text-[clamp(1.75rem,2.6vw,2.75rem)] leading-[1.08] font-bold tracking-[-0.02em] text-hero-foreground">
+              <h2 className="mt-3 max-w-2xl font-display text-[clamp(1.3rem,1.8vw,1.9rem)] leading-[1.2] font-bold tracking-[-0.01em] text-hero-foreground">
                 {CTA_BAND.heading}
               </h2>
               <p className="mt-3 max-w-lg text-[0.95rem] leading-relaxed text-hero-foreground/85 sm:text-base">

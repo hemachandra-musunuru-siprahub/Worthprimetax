@@ -669,9 +669,8 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
       paragraphs: [
         "WorthPrime Tax assists taxpayers and businesses with applicable international and ownership reporting obligations, helping ensure required information is identified, prepared and reported accurately.",
         "Holding financial accounts or assets outside the United States can create additional reporting responsibilities. FBAR and FATCA have separate filing requirements, reporting thresholds and disclosure rules.",
-        "WorthPrime Tax provides foreign financial account reporting and international tax compliance support, helping taxpayers identify applicable obligations, organise financial information and prepare required disclosures.",
-        "We also assist with assessing beneficial ownership reporting requirements for qualifying foreign entities registered to do business in the United States.",
-        "Our approach connects international reporting with the wider U.S. tax and compliance picture, helping clients maintain accurate records and address applicable obligations.",
+        "Our services include foreign financial account reporting and assistance with assessing beneficial ownership reporting requirements for qualifying foreign entities registered to do business in the United States.",
+        "By connecting these requirements with the wider U.S. tax framework, we help clients maintain accurate records and understand their compliance responsibilities.",
       ],
       cta: "Stay ahead of your reporting obligations",
     },

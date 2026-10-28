@@ -27,7 +27,7 @@ import {
   CLIENT_EXPERIENCE,
   FAQ_INTRO,
   FAQS,
-  FOUNDERS,
+  // FOUNDERS,
   HOME_PRICING,
   INSIGHTS,
   PROCESS,
@@ -54,7 +54,7 @@ import { SERVICE_IMAGES } from "@/components/site/serviceImages";
 import { cn } from "@/lib/utils";
 import heroImage from "@/assets/worthprime-hero-team.webp";
 import advisersImage from "@/assets/worthprime-advisers-blue.webp";
-import { FOUNDER_PHOTOS } from "@/components/site/founderPhotos";
+// import { FOUNDER_PHOTOS } from "@/components/site/founderPhotos";
 import workspaceImage from "@/assets/worthprime-workspace.webp";
 import stepTalkImage from "@/assets/process/step-talk.jpg";
 import stepScopeImage from "@/assets/process/step-scope.jpg";
@@ -85,7 +85,7 @@ function Index() {
         <PricingMarquee />
       </div>
       <StatsBand />
-      <WhoWeAre />
+      {/* <WhoWeAre /> */}
       <ProofSection />
       <ServicesGrid />
       <PricingPreview />
@@ -193,58 +193,61 @@ function StatsBand() {
   );
 }
 
-function WhoWeAre() {
-  return (
-    <Section>
-      <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
-        <div>
-          <SectionLabel>How We Started?</SectionLabel>
-          <h2 className="mt-4 text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
-            Built on Experience. <span className="text-primary">Shaped by Perspective.</span>
-          </h2>
-          <p className="mt-6 text-muted-foreground">
-            Behind every enduring enterprise lies a confluence of sound structure, considered
-            decisions and discerning professional counsel. WorthPrime Tax was shaped by precisely
-            that philosophy—bringing together the complementary expertise of its co-founders, with
-            extensive experience across accounting, taxation, audit, payroll, legal and compliance
-            services spanning the U.S., UAE and India.
-          </p>
-          <Link
-            to="/about"
-            className="mt-7 inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm transition-colors hover:bg-accent"
-          >
-            More About Us <ArrowRight className="size-4" />
-          </Link>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2">
-          {FOUNDERS.map((f, i) => (
-            <Reveal key={f.name} delay={i * 100}>
-              <article className="surface-card overflow-hidden">
-                <img
-                  src={FOUNDER_PHOTOS[i] ?? advisersImage}
-                  alt={
-                    FOUNDER_PHOTOS[i]
-                      ? `Portrait of ${f.name}`
-                      : "Professional tax advisers in consultation"
-                  }
-                  width={1408}
-                  height={1008}
-                  loading="lazy"
-                  className="aspect-4/5 w-full object-cover object-top"
-                />
-                <div className="p-5">
-                  <h3 className="text-xl leading-tight">{f.name}</h3>
-                  <p className="mt-1 text-xs uppercase tracking-widest text-primary">{f.title}</p>
-                  <p className="mt-3 text-xs text-muted-foreground">{f.credential}</p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
+// "How We Started?" section hidden for now; uncomment it and <WhoWeAre /> above to restore.
+// function WhoWeAre() {
+//   return (
+//     <Section>
+//       <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+//         <div>
+//           <SectionLabel>How We Started?</SectionLabel>
+//           <h2 className="mt-4 text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
+//             Built on Experience. <span className="text-primary">Shaped by Perspective.</span>
+//           </h2>
+//           <p className="mt-6 text-muted-foreground">
+//             Behind every enduring enterprise lies a confluence of sound structure, considered
+//             decisions and discerning professional counsel. WorthPrime Tax was shaped by precisely
+//             that philosophy—bringing together the complementary expertise of its co-founders, with
+//             extensive experience across accounting, taxation, audit, payroll, legal and compliance
+//             services spanning the U.S., UAE and India.
+//           </p>
+//           <Link
+//             to="/about"
+//             className="mt-7 inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm transition-colors hover:bg-accent"
+//           >
+//             More About Us <ArrowRight className="size-4" />
+//           </Link>
+//         </div>
+//         {/* Co-founder cards hidden for now; restore with the FOUNDERS / FOUNDER_PHOTOS imports.
+//         <div className="grid gap-5 sm:grid-cols-2">
+//           {FOUNDERS.map((f, i) => (
+//             <Reveal key={f.name} delay={i * 100}>
+//               <article className="surface-card overflow-hidden">
+//                 <img
+//                   src={FOUNDER_PHOTOS[i] ?? advisersImage}
+//                   alt={
+//                     FOUNDER_PHOTOS[i]
+//                       ? `Portrait of ${f.name}`
+//                       : "Professional tax advisers in consultation"
+//                   }
+//                   width={1408}
+//                   height={1008}
+//                   loading="lazy"
+//                   className="aspect-4/5 w-full object-cover object-top"
+//                 />
+//                 <div className="p-5">
+//                   <h3 className="text-xl leading-tight">{f.name}</h3>
+//                   <p className="mt-1 text-xs uppercase tracking-widest text-primary">{f.title}</p>
+//                   <p className="mt-3 text-xs text-muted-foreground">{f.credential}</p>
+//                 </div>
+//               </article>
+//             </Reveal>
+//           ))}
+//         </div>
+//         */}
+//       </div>
+//     </Section>
+//   );
+// }
 
 function WhatComesNext() {
   return (
@@ -310,14 +313,15 @@ function ProofSection() {
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
           <div className="min-w-0">
-            <SectionLabel>Why WorthPrime Tax?</SectionLabel>
             <h2
               id="why-worthprime-heading"
-              className="mt-4 font-serif text-[clamp(2.3rem,4.6vw,3.8rem)] leading-[1.02] font-bold tracking-[-0.02em] text-balance"
+              className="font-serif text-[clamp(2.3rem,4.6vw,3.8rem)] leading-[1.02] font-bold tracking-[-0.02em] text-balance text-primary"
             >
-              <span className="block text-primary">One Firm.</span>
-              <span className="block text-brand-secondary">Every Business Need.</span>
+              Why WorthPrime Tax?
             </h2>
+            <p className="mt-4 font-serif text-[clamp(1.25rem,2vw,1.6rem)] leading-snug font-semibold text-primary">
+              One Firm. Every Business Need.
+            </p>
             <p className="mt-6 max-w-[38rem] text-base leading-relaxed text-muted-foreground sm:text-[1.0625rem]">
               Business does not operate in separate compartments. A tax decision can affect
               accounting. Entity structure can influence tax treatment. Payroll creates reporting
@@ -419,11 +423,12 @@ function ServicesGrid() {
     <Section id="services">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div className="max-w-3xl">
-          <SectionLabel>What We Do?</SectionLabel>
-          <h2 className="mt-4 text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
-            The Numbers Behind Your Business.{" "}
-            <span className="text-primary">The Perspective Beyond Them.</span>
+          <h2 className="text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05] text-primary">
+            What We Do?
           </h2>
+          <p className="mt-4 text-[clamp(1.25rem,2vw,1.6rem)] leading-snug font-semibold text-primary">
+            The Numbers Behind Your Business. The Perspective Beyond Them.
+          </p>
         </div>
         <Link
           to="/services"

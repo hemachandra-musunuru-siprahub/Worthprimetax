@@ -1,6 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { seoHead } from "@/lib/seo";
-import { Headphones, ShieldCheck, Zap } from "lucide-react";
+import { Check, Copy, Headphones, ShieldCheck, Zap } from "lucide-react";
 import { PAYMENT_PAGE } from "@/data/site";
 import { Container } from "@/components/site/primitives";
 // Original Zelle QR card supplied by the client (2026-10-23), used unchanged. Never generate, redraw
@@ -53,9 +54,8 @@ function PaymentMethodsPage() {
           <article
             className={`${card} mx-auto w-full max-w-[26rem] text-center lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:self-center`}
           >
-            <h2 className="text-lg font-bold [overflow-wrap:anywhere] text-primary sm:text-xl">
-              {zelle.label} {zelle.id}
-            </h2>
+            <h2 className="text-lg font-bold text-primary sm:text-xl">{zelle.label}</h2>
+            <CopyableId value={zelle.id} />
             <img
               src={zelleQrImage}
               alt={zelle.qrAlt}
@@ -115,5 +115,61 @@ function PaymentMethodsPage() {
 
       <PricingMarquee />
     </>
+  );
+}
+
+/**
+ * The Zelle ID on one line with a copy button. If the browser blocks clipboard access, the text
+ * is selected instead so the visitor can press Ctrl+C.
+ */
+function CopyableId({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+  const textRef = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+    } catch (error) {
+      console.error("Copying the Zelle ID failed; selecting it instead.", error);
+      const node = textRef.current;
+      const selection = window.getSelection();
+      if (node && selection) {
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  }
+
+  return (
+    <div className="mt-1 flex items-center justify-center gap-2">
+      <span ref={textRef} className="text-base font-bold whitespace-nowrap text-primary sm:text-lg">
+        {value}
+      </span>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label={copied ? "Zelle ID copied" : "Copy Zelle ID"}
+        title={copied ? "Copied" : "Copy"}
+        className="grid size-9 shrink-0 place-items-center rounded-full border border-border text-primary transition-colors hover:bg-tint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        {copied ? (
+          <Check className="size-4" aria-hidden />
+        ) : (
+          <Copy className="size-4" aria-hidden />
+        )}
+      </button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Zelle ID copied to clipboard" : ""}
+      </span>
+    </div>
   );
 }

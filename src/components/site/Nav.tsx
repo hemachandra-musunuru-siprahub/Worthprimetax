@@ -12,7 +12,7 @@ const NAV_WIDTH = "max-w-[1492px]";
 
 // Active page gets a thin underline in the link colour (TanStack Link sets data-status="active").
 const navLink =
-  "relative px-3 py-2 text-sm transition-colors after:pointer-events-none after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity data-[status=active]:font-semibold data-[status=active]:after:opacity-100";
+  "relative px-3 py-2 text-sm font-bold transition-colors after:pointer-events-none after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity data-[status=active]:after:opacity-100";
 
 const NAV_ITEMS = [
   { label: "About", to: "/about" as const },
@@ -141,7 +141,7 @@ export function Nav() {
             target="_blank"
             rel="noreferrer noopener"
             className={cn(
-              "px-3 py-2 text-xs transition-colors",
+              "px-3 py-2 text-xs font-bold transition-colors",
               overlay
                 ? "text-hero-foreground/80 hover:text-hero-foreground"
                 : "text-muted-foreground hover:text-nav-link-hover",
@@ -196,20 +196,24 @@ export function Nav() {
       {open && (
         <div className="pointer-events-auto mx-auto mt-2 max-h-[78vh] w-full max-w-[1200px] overflow-y-auto rounded-3xl border border-nav-border bg-nav-menu p-4 backdrop-blur-xl lg:hidden">
           <div className="flex flex-col gap-1">
-            <Link to="/" onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 text-sm">
+            <Link
+              to="/"
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
+            >
               Home
             </Link>
             <Link
               to="/about"
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               About
             </Link>
             <Link
               to="/services"
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               Services
             </Link>
@@ -230,21 +234,21 @@ export function Nav() {
             <Link
               to="/pricing"
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               Pricing
             </Link>
             <Link
               to="/insights"
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               Insights
             </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               Contact
             </Link>
@@ -252,7 +256,7 @@ export function Nav() {
               href={LINKS.irs}
               target="_blank"
               rel="noreferrer noopener"
-              className="rounded-xl px-3 py-2.5 text-sm"
+              className="rounded-xl px-3 py-2.5 text-sm font-bold"
             >
               IRS Refund Status
             </a>

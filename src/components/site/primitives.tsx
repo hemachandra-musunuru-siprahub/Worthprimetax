@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-/** Fires once when the element scrolls into view. */
-export function useInView<T extends HTMLElement>(threshold = 0.2) {
+/**
+ * Fires when the element scrolls into view. With `once` (the default) it stays true from then on;
+ * otherwise it turns false again whenever the element leaves the view.
+ */
+export function useInView<T extends HTMLElement>(threshold = 0.2, once = true) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -15,16 +18,19 @@ export function useInView<T extends HTMLElement>(threshold = 0.2) {
     }
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
+        const visible = entries.some((e) => e.isIntersecting);
+        if (visible && once) {
           setInView(true);
           observer.disconnect();
+        } else if (!once) {
+          setInView(visible);
         }
       },
       { threshold },
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, once]);
 
   return { ref, inView };
 }
@@ -65,11 +71,15 @@ export function CountUp({
   suffix?: string;
   duration?: number;
 }) {
-  const { ref, inView } = useInView<HTMLSpanElement>(0.4);
+  // Counts up from zero every time the number scrolls into view, and resets when it leaves.
+  const { ref, inView } = useInView<HTMLSpanElement>(0.4, false);
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView) {
+      setDisplay(0);
+      return;
+    }
     const reduced =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
