@@ -125,7 +125,8 @@ function Hero() {
       {/* Wider than the standard container, like the reference; the nav widens to match on this page. */}
       <Container className="relative max-w-[1540px] lg:px-10">
         <div className="flex max-w-[900px] flex-col pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-[min(4rem,8svh)] lg:pb-[min(5rem,8svh)]">
-          <h1 className="font-serif text-[clamp(2rem,3.6vw,3rem)] leading-[1.12] font-bold tracking-[-0.02em] text-primary xl:text-[clamp(2rem,min(2.5vw,5svh),2.75rem)]">
+          {/* Same heading size as the Services hero (BackdropHero). */}
+          <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.12] font-bold tracking-[-0.02em] text-primary">
             {/* Two lines from tablet up, as requested by the client: the break falls after "a". */}
             <span className="sm:block sm:whitespace-nowrap">Your Business Is More Than a</span>{" "}
             <span className="sm:block sm:whitespace-nowrap">Tax Return. So Are We.</span>
