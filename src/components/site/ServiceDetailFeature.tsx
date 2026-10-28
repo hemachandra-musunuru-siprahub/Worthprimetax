@@ -166,7 +166,10 @@ export function ServiceDetailFeature({
   return (
     <>
       <BackdropHero
-        lines={page.heroBackdrop?.lines ?? [[{ text: page.heading }]]}
+        // Service pages keep the whole heading in the single brand blue (no bright-blue accent).
+        lines={(page.heroBackdrop?.lines ?? [[{ text: page.heading }]]).map((line) =>
+          line.map((part) => ({ ...part, accent: false })),
+        )}
         intro={page.intro}
         image={media.heroBackdrop}
       />

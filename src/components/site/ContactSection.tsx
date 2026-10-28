@@ -44,11 +44,15 @@ export function ContactSection({
           <Heading
             className={cn(
               "font-serif leading-[1.04] font-bold tracking-[-0.02em] text-primary",
-              compact ? "text-[clamp(2rem,4vw,3.25rem)]" : "text-[clamp(2.4rem,5vw,4.25rem)]",
+              // The contact page hero uses a smaller heading than the home page section.
+              asPageHeading
+                ? "text-[clamp(1.75rem,3vw,2.5rem)]"
+                : compact
+                  ? "text-[clamp(2rem,4vw,3.25rem)]"
+                  : "text-[clamp(2.4rem,5vw,4.25rem)]",
             )}
           >
-            {HOME_CONTACT.heading}{" "}
-            <span className="block text-brand-secondary">{HOME_CONTACT.headingAccent}</span>
+            {HOME_CONTACT.heading} <span className="block">{HOME_CONTACT.headingAccent}</span>
           </Heading>
           <p
             className={cn(

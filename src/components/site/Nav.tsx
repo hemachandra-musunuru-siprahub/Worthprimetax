@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronDown, CreditCard, Menu, X } from "lucide-react";
+import { ChevronDown, ChevronRight, CreditCard, Menu, X } from "lucide-react";
 import { SERVICES } from "@/data/services";
 import { LINKS } from "@/data/site";
 import { cn } from "@/lib/utils";
@@ -22,6 +22,7 @@ const NAV_ITEMS = [
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   // Transparent only while at the top of a dark-hero page with the mobile menu closed.
@@ -193,84 +194,125 @@ export function Nav() {
         </div>
       </nav>
 
+      {/* Full-width panel flush under the header (a nav drawer, not a floating card). The header's
+          backdrop-blur makes it the containing block, so the panel is sized rather than fixed. */}
       {open && (
-        <div className="pointer-events-auto mx-auto mt-2 max-h-[78vh] w-full max-w-[1200px] overflow-y-auto rounded-3xl border border-nav-border bg-nav-menu p-4 backdrop-blur-xl lg:hidden">
-          <div className="flex flex-col gap-1">
-            <Link
-              to="/"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
+        <div
+          className={cn(
+            "pointer-events-auto -mx-3 flex flex-col overflow-y-auto border-t border-nav-border bg-nav-menu sm:-mx-6 lg:hidden",
+            scrolled ? "h-[calc(100dvh-3.5rem)]" : "h-[calc(100dvh-4rem)]",
+          )}
+        >
+          <ul className="flex flex-col">
+            <MobileNavRow to="/" onNavigate={() => setOpen(false)}>
               Home
-            </Link>
-            <Link
-              to="/about"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
+            </MobileNavRow>
+            <MobileNavRow to="/about" onNavigate={() => setOpen(false)}>
               About
-            </Link>
-            <Link
-              to="/services"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
-              Services
-            </Link>
-            <div className="my-1 grid gap-0.5 border-l border-nav-border pl-3">
-              {SERVICES.map((s) => (
-                <Link
-                  key={s.slug}
-                  to="/services/$slug"
-                  params={{ slug: s.slug }}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-2 py-1.5 text-xs text-muted-foreground"
-                >
-                  <span className="mr-1.5 text-primary">{s.number}</span>
-                  {s.name}
+            </MobileNavRow>
+            <li className="border-b border-nav-border">
+              <div className="flex items-stretch">
+                <Link to="/services" onClick={() => setOpen(false)} className={mobileRow}>
+                  Services
                 </Link>
-              ))}
-            </div>
-            <Link
-              to="/pricing"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
+                <button
+                  type="button"
+                  aria-label={mobileServicesOpen ? "Hide services" : "Show services"}
+                  aria-expanded={mobileServicesOpen}
+                  onClick={() => setMobileServicesOpen((v) => !v)}
+                  className="grid w-14 shrink-0 place-items-center border-l border-nav-border text-nav-link"
+                >
+                  <ChevronDown
+                    className={cn(
+                      "size-5 transition-transform",
+                      mobileServicesOpen && "rotate-180",
+                    )}
+                  />
+                </button>
+              </div>
+              {mobileServicesOpen && (
+                <ul className="bg-tint/60 py-1">
+                  {SERVICES.map((s) => (
+                    <li key={s.slug}>
+                      <Link
+                        to="/services/$slug"
+                        params={{ slug: s.slug }}
+                        onClick={() => setOpen(false)}
+                        className="flex gap-2.5 px-6 py-2.5 text-sm text-foreground/80 data-[status=active]:font-semibold data-[status=active]:text-primary"
+                      >
+                        <span className="text-primary">{s.number}</span>
+                        {s.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+            <MobileNavRow to="/pricing" onNavigate={() => setOpen(false)}>
               Pricing
-            </Link>
-            <Link
-              to="/insights"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
+            </MobileNavRow>
+            <MobileNavRow to="/insights" onNavigate={() => setOpen(false)}>
               Insights
-            </Link>
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
+            </MobileNavRow>
+            <MobileNavRow to="/contact" onNavigate={() => setOpen(false)}>
               Contact
-            </Link>
-            <a
-              href={LINKS.irs}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="rounded-xl px-3 py-2.5 text-sm font-bold"
-            >
-              IRS Refund Status
-            </a>
+            </MobileNavRow>
+            <li className="border-b border-nav-border">
+              <a href={LINKS.irs} target="_blank" rel="noreferrer noopener" className={mobileRow}>
+                IRS Refund Status
+                <ChevronRight className="size-4 text-muted-foreground" aria-hidden />
+              </a>
+            </li>
+          </ul>
+
+          <div className="mt-auto grid gap-3 p-6">
             <a
               href={LINKS.login}
               target="_blank"
               rel="noreferrer noopener"
-              className="mt-2 rounded-xl bg-button px-4 py-2.5 text-center text-sm font-medium tracking-wide text-button-foreground uppercase"
+              className="rounded-xl bg-button px-4 py-3 text-center text-sm font-medium tracking-wide text-button-foreground uppercase"
             >
               Login/Register
             </a>
+            <Link
+              to="/payment-methods"
+              onClick={() => setOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary px-4 py-3 text-sm font-medium text-primary"
+            >
+              <CreditCard className="size-4" strokeWidth={1.75} aria-hidden />
+              Pay Here
+            </Link>
           </div>
         </div>
       )}
     </header>
+  );
+}
+
+// Full-width menu row; the active page is shown in the brand colour.
+const mobileRow =
+  "flex flex-1 items-center justify-between px-6 py-4 text-base font-bold text-nav-link data-[status=active]:text-primary";
+
+function MobileNavRow({
+  to,
+  onNavigate,
+  children,
+}: {
+  to: "/" | "/about" | "/pricing" | "/insights" | "/contact";
+  onNavigate: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <li className="border-b border-nav-border">
+      <Link
+        to={to}
+        onClick={onNavigate}
+        activeOptions={{ exact: to === "/" }}
+        className={mobileRow}
+      >
+        {children}
+        <ChevronRight className="size-4 text-muted-foreground" aria-hidden />
+      </Link>
+    </li>
   );
 }
