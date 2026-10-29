@@ -28,12 +28,14 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { getService, HOW_THE_WORK_MOVES, type Service } from "@/data/services";
+import { getServiceFaqs } from "@/data/serviceFaqs";
 import { type ServicePage } from "@/data/servicePages";
 import { cn } from "@/lib/utils";
 import { Container, Reveal } from "./primitives";
 import { BackdropHero } from "./BackdropHero";
 import { CtaBand } from "./CtaBand";
 import { PricingMarquee } from "./PricingMarquee";
+import { ServiceFaqs } from "./ServiceFaqs";
 import { getServiceThumb, type ServiceDetailMedia } from "./serviceDetailMedia";
 
 // Matched against each capability's text; first match wins, so specific topics come before
@@ -162,6 +164,7 @@ export function ServiceDetailFeature({
     return s ? [{ service: s, body: item.body }] : [];
   });
   const audiences = page.whoFor.audiences;
+  const faqs = getServiceFaqs(service.slug);
 
   return (
     <>
@@ -389,6 +392,17 @@ export function ServiceDetailFeature({
           </ul>
         </Container>
       </section>
+
+      {/* FAQs: client-supplied questions, above the closing call to action */}
+      {faqs.length > 0 && (
+        <section id="faqs" className="scroll-mt-20 pb-12 sm:pb-16">
+          <Container>
+            <NumberedLabel n={6}>FAQs</NumberedLabel>
+            <SectionIntro heading="Frequently Asked Questions" />
+            <ServiceFaqs groups={faqs} />
+          </Container>
+        </section>
+      )}
 
       <CtaBand />
     </>

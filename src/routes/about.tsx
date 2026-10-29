@@ -460,22 +460,26 @@ function AboutPage() {
   return (
     <>
       {/* Skip the layout's nav spacer so the photo runs up behind the transparent bar. */}
-      <section className="overflow-hidden before:!hidden">
+      {/* Phones (max-sm) follow the service hero: the photo sits behind the copy under a white
+          wash so the price strip shows on the first screen. sm and up keep the chevron layout. */}
+      <section className="relative isolate overflow-hidden before:!hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 hidden bg-linear-to-b from-background/90 via-background/75 to-background/40 max-sm:block"
+        />
         {/* Chevron for the hero photo: rounded point on the left, matching rounded notch on the right. */}
         <svg width="0" height="0" className="absolute" aria-hidden>
           <clipPath id="about-hero-shape" clipPathUnits="objectBoundingBox">
             <path d="M0.18,0 L0.84,0 L0.752,0.2 Q0.73,0.25 0.748,0.3 L1,1 L0.35,1 L0.023,0.3 Q0,0.25 0.036,0.2 Z" />
           </clipPath>
         </svg>
-        {/* Phones (max-sm) mirror the desktop layout: copy on top, then the chevron photo with the
-            points and "People / Process / Perspective" beside it. */}
-        <div className="mx-auto grid max-w-[1440px] items-center gap-8 max-sm:grid-cols-[1.35fr_1fr] max-sm:gap-x-3 max-sm:gap-y-6 lg:grid-cols-[1fr_1.15fr_auto] lg:gap-0">
-          <div className="px-5 pt-24 max-sm:col-span-2 sm:px-8 lg:pt-28 lg:pb-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
-            <h1 className={cn("text-[clamp(2.3rem,3.9vw,3.6rem)]", HEADING)}>
+        <div className="mx-auto grid max-w-[1440px] items-center gap-8 max-sm:gap-6 lg:grid-cols-[1fr_1.15fr_auto] lg:gap-0">
+          <div className="px-5 pt-24 sm:px-8 lg:pt-28 lg:pb-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
+            <h1 className={cn("text-[clamp(2.3rem,3.9vw,3.6rem)] max-sm:text-[1.6rem]", HEADING)}>
               Experienced Professionals.{" "}
               <span className="block text-brand-secondary">Real Perspective.</span>
             </h1>
-            <p className="mt-6 max-w-xl leading-relaxed">
+            <p className="mt-6 max-w-xl leading-relaxed max-sm:mt-4 max-sm:text-[0.9375rem]">
               WorthPrime Tax brings together deep domain expertise, practical guidance and a
               client-centric approach to help individuals and businesses navigate U.S. tax
               requirements with confidence.
@@ -486,14 +490,14 @@ function AboutPage() {
             alt="WorthPrime logo on a marble office wall"
             width={1672}
             height={941}
-            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] max-sm:aspect-[4/5] lg:aspect-auto lg:min-h-[560px]"
+            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] max-sm:absolute max-sm:inset-0 max-sm:-z-20 max-sm:aspect-auto max-sm:[clip-path:none] lg:aspect-auto lg:min-h-[560px]"
           />
-          <div className="flex flex-col justify-between gap-8 px-5 pb-8 max-sm:h-full max-sm:gap-6 max-sm:py-2 max-sm:pr-5 max-sm:pl-0 sm:px-8 lg:h-full lg:pt-24 lg:pb-10 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-6">
-            <ul className="flex flex-wrap gap-5 max-sm:flex-col lg:flex-col lg:gap-7">
+          <div className="flex flex-col justify-between gap-8 px-5 pb-8 sm:px-8 lg:h-full lg:pt-24 lg:pb-10 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-6">
+            <ul className="flex flex-wrap gap-5 lg:flex-col lg:gap-7">
               {HERO_POINTS.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 text-sm font-semibold text-primary max-sm:gap-2 max-sm:text-xs"
+                  className="flex items-center gap-3 text-sm font-semibold text-primary"
                 >
                   <IconCircle>
                     <Icon className="size-5" strokeWidth={1.5} aria-hidden />
@@ -502,7 +506,7 @@ function AboutPage() {
                 </li>
               ))}
             </ul>
-            <p className="hidden text-xs leading-loose tracking-[0.2em] text-muted-foreground uppercase max-sm:block max-sm:text-[0.65rem] max-sm:tracking-[0.16em] lg:block">
+            <p className="hidden text-xs leading-loose tracking-[0.2em] text-muted-foreground uppercase lg:block">
               People
               <br />
               Process

@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SERVICES, type Service } from "@/data/services";
 import { cn } from "@/lib/utils";
-import { SERVICE_ICONS } from "./serviceIcons";
 
 // Only confirmed "From …" prices are shown as figures; everything else stays a placeholder.
 function displayPrice(price: string) {
@@ -21,18 +20,6 @@ function PriceTag({ price }: { price: string }) {
       )}
     >
       {displayPrice(price)}
-    </span>
-  );
-}
-
-function ServiceIcon({ slug }: { slug: string }) {
-  const Icon = SERVICE_ICONS[slug] ?? FileText;
-  return (
-    <span
-      className="grid size-7 shrink-0 place-items-center rounded-full bg-brand-gold/15 text-primary"
-      aria-hidden
-    >
-      <Icon className="size-3.5" strokeWidth={1.7} />
     </span>
   );
 }
@@ -174,22 +161,24 @@ export function PricingTable({ ctaLabel = "Contact Us" }: { ctaLabel?: string })
       <ul className="grid gap-3 sm:grid-cols-2 lg:hidden">
         {ROWS.map((r) => (
           <li key={r.key} className="flex flex-col rounded-xl border border-border bg-card p-4">
-            <div className="flex items-center gap-3">
-              {r.number && (
-                <span className="text-xs whitespace-pre text-muted-foreground">
-                  <RowNumber row={r} />
-                </span>
-              )}
-              <ServiceIcon slug={r.service.slug} />
-              <ServiceLink service={r.service} name={r.name} />
+            {/* Name on the left, starting price on the right. */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 items-baseline gap-2">
+                {r.number && (
+                  <span className="text-xs whitespace-pre text-muted-foreground">
+                    <RowNumber row={r} />
+                  </span>
+                )}
+                <ServiceLink service={r.service} name={r.name} />
+              </div>
+              <div className="shrink-0 text-right whitespace-nowrap">
+                <span className="sr-only">Starting From </span>
+                <PriceTag price={r.price} />
+              </div>
             </div>
-            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
               {r.included}
             </p>
-            <div className="mt-4">
-              <span className="sr-only">Starting From </span>
-              <PriceTag price={r.price} />
-            </div>
           </li>
         ))}
       </ul>

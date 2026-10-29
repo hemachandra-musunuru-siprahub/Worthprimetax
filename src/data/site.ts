@@ -432,7 +432,7 @@ export const CTA_BAND = {
   heading:
     "Whatever the next financial decision looks like, make it with perspective. From Setup to Success, We’re With You.",
   intro: "Tax guidance, business support, and financial clarity—built around you.",
-  primary: "Request a Quote",
+  primary: "Talk to a Tax Expert",
   secondary: "Explore Our Services",
   points: [
     { title: "Trusted", text: "Tax Guidance" },

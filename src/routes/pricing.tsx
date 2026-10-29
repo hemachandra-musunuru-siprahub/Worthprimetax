@@ -24,6 +24,12 @@ function PricingPage() {
   return (
     <>
       <section className="relative isolate overflow-hidden bg-linear-to-b from-tint to-background">
+        {/* Phones (max-sm) follow the service hero: the desk photo (the lg:hidden img below) sits
+            behind the copy under this white wash, so the price strip shows on the first screen. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 hidden bg-linear-to-b from-background/90 via-background/80 to-background/55 max-sm:block"
+        />
         {/*
          * Desk photo filling the right of the hero behind a gold diagonal edge: the outer layer is
          * the gold, the photo sits a few pixels in with the same slant.
@@ -43,18 +49,18 @@ function PricingPage() {
 
         <Container className={`${WIDE} pt-5 pb-8 sm:pt-6 lg:pt-6 lg:pb-6`}>
           <div className="max-w-[40rem] lg:max-w-[47%]">
-            <h1 className="font-serif text-[clamp(2.25rem,3.9vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.02em]">
+            <h1 className="font-serif text-[clamp(2.25rem,3.9vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.02em] max-sm:text-[1.6rem] max-sm:leading-[1.16]">
               <span className="block text-primary">{PRICING_PAGE.heading}</span>
               <span className="block font-semibold text-brand-gold">
                 {PRICING_PAGE.headingMuted}
               </span>
             </h1>
-            <p className="mt-3 max-w-[34rem] text-base leading-snug text-muted-foreground sm:text-[1.0625rem]">
+            <p className="mt-3 max-w-[34rem] text-base leading-snug text-muted-foreground max-sm:text-[0.9375rem] max-sm:text-foreground/85 sm:text-[1.0625rem]">
               {PRICING_PAGE.intro}
             </p>
             <HeroCta className="mt-5" />
 
-            <ul className="mt-5 grid gap-4 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-border">
+            <ul className="mt-5 grid gap-4 max-sm:gap-3 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-border">
               {PRICING_PAGE.highlights.map((h, i) => {
                 const Icon = HIGHLIGHT_ICONS[i] ?? Globe;
                 return (
@@ -79,7 +85,7 @@ function PricingPage() {
             alt=""
             width={1054}
             height={436}
-            className="mt-8 aspect-[16/7] w-full rounded-xl object-cover lg:hidden"
+            className="mt-8 aspect-[16/7] w-full rounded-xl object-cover max-sm:absolute max-sm:inset-0 max-sm:-z-20 max-sm:mt-0 max-sm:aspect-auto max-sm:h-full max-sm:rounded-none lg:hidden"
           />
         </Container>
       </section>
