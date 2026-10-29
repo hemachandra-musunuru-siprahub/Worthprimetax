@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { seoHead } from "@/lib/seo";
 import { useState, type ReactNode } from "react";
 import {
@@ -7,14 +7,18 @@ import {
   ChartColumn,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  MapPin,
   Play,
   ShieldCheck,
+  Trophy,
   Users,
   type LucideIcon,
 } from "lucide-react";
 import { FOUNDERS, OFFICES } from "@/data/site";
 import { CountUp, Reveal, Section, SectionLabel } from "@/components/site/primitives";
 import { CtaBand } from "@/components/site/CtaBand";
+import { HeroCta } from "@/components/site/HeroCta";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +30,7 @@ import { cn } from "@/lib/utils";
 import advisersImage from "@/assets/worthprime-advisers-blue.webp";
 import { FOUNDER_PHOTOS } from "@/components/site/founderPhotos";
 import aboutHeroImage from "@/assets/about hero.png";
+import aboutHeroMobileImage from "@/assets/about-hero-mobile.webp";
 import { PricingMarquee } from "@/components/site/PricingMarquee";
 
 const TITLE = "About WorthPrime Tax | Built on Experience";
@@ -465,7 +470,21 @@ function AboutPage() {
       <section className="relative isolate overflow-hidden before:!hidden">
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 hidden bg-linear-to-b from-background/90 via-background/75 to-background/40 max-sm:block"
+          className="absolute inset-0 -z-10 hidden bg-linear-to-r from-background from-55% via-background/85 via-75% to-background/0 max-sm:block"
+        />
+        {/* Lifts the lower part of the phone photo (navy desk and shelves) so the points stay readable. */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 -z-10 hidden h-2/5 bg-linear-to-t from-background from-30% via-background/80 to-background/0 max-sm:block"
+        />
+        {/* Phones use a bright office interior (city view, desk on the right) instead of the
+            logo-wall photo. */}
+        <img
+          src={aboutHeroMobileImage}
+          alt=""
+          width={1024}
+          height={1536}
+          className="absolute inset-0 -z-20 hidden size-full object-cover object-[right_top] max-sm:block"
         />
         {/* Chevron for the hero photo: rounded point on the left, matching rounded notch on the right. */}
         <svg width="0" height="0" className="absolute" aria-hidden>
@@ -475,31 +494,53 @@ function AboutPage() {
         </svg>
         <div className="mx-auto grid max-w-[1440px] items-center gap-8 max-sm:gap-6 lg:grid-cols-[1fr_1.15fr_auto] lg:gap-0">
           <div className="px-5 pt-24 sm:px-8 lg:pt-28 lg:pb-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
-            <h1 className={cn("text-[clamp(2.3rem,3.9vw,3.6rem)] max-sm:text-[1.6rem]", HEADING)}>
-              Experienced Professionals.{" "}
-              <span className="block text-brand-secondary">Real Perspective.</span>
+            <h1
+              className={cn(
+                "text-[clamp(2.3rem,3.9vw,3.6rem)] max-sm:text-[1.95rem] max-sm:leading-[1.05]",
+                HEADING,
+              )}
+            >
+              Experienced Professionals. <span className="block">Real Perspective.</span>
             </h1>
-            <p className="mt-6 max-w-xl leading-relaxed max-sm:mt-4 max-sm:text-[0.9375rem]">
+            {/* Phones only: a short rule under the heading, and the hero buttons below the intro. */}
+            <span
+              className="mt-5 hidden h-0.5 w-12 rounded-full bg-brand-secondary/60 max-sm:block"
+              aria-hidden
+            />
+            <p className="mt-6 max-w-xl leading-relaxed max-sm:mt-4 max-sm:max-w-[16.5rem] max-sm:text-[0.875rem] max-sm:text-foreground/80">
               WorthPrime Tax brings together deep domain expertise, practical guidance and a
               client-centric approach to help individuals and businesses navigate U.S. tax
               requirements with confidence.
             </p>
+            {/* Both buttons share one row, like the home hero on phones; below 360px they wrap. */}
+            <div className="mt-6 hidden gap-2 max-sm:flex max-[359px]:flex-wrap">
+              <HeroCta
+                label="Book a Consultation"
+                className="flex-auto justify-center gap-1.5 px-2.5 py-3 text-xs whitespace-nowrap"
+              />
+              <Link
+                to="/services"
+                className="inline-flex flex-auto items-center justify-center rounded-md border border-primary bg-background px-2.5 py-3 text-xs font-semibold whitespace-nowrap text-primary"
+              >
+                Explore Tax Services
+              </Link>
+            </div>
           </div>
           <img
             src={aboutHeroImage}
             alt="WorthPrime logo on a marble office wall"
             width={1672}
             height={941}
-            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] max-sm:absolute max-sm:inset-0 max-sm:-z-20 max-sm:aspect-auto max-sm:[clip-path:none] lg:aspect-auto lg:min-h-[560px]"
+            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] max-sm:hidden lg:aspect-auto lg:min-h-[560px]"
           />
           <div className="flex flex-col justify-between gap-8 px-5 pb-8 sm:px-8 lg:h-full lg:pt-24 lg:pb-10 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-6">
-            <ul className="flex flex-wrap gap-5 lg:flex-col lg:gap-7">
+            <ul className="flex flex-wrap gap-5 max-sm:grid max-sm:grid-cols-2 max-sm:gap-0 max-sm:divide-x max-sm:divide-border lg:flex-col lg:gap-7">
               {HERO_POINTS.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 text-sm font-semibold text-primary"
+                  className="flex items-center gap-3 text-sm font-semibold text-primary max-sm:px-4 max-sm:first:pl-0"
                 >
-                  <IconCircle>
+                  <IconCircle className="max-sm:border-transparent max-sm:bg-muted">
                     <Icon className="size-5" strokeWidth={1.5} aria-hidden />
                   </IconCircle>
                   <span className="max-w-24 leading-snug">{label}</span>
@@ -520,14 +561,15 @@ function AboutPage() {
       <PricingMarquee />
 
       <section className="border-y border-border bg-card">
-        <dl className="mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-5 py-8 sm:px-8 lg:grid-cols-4 lg:divide-x lg:divide-border">
+        <dl className="mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-5 py-8 max-sm:gap-0 max-sm:py-3 sm:px-8 lg:grid-cols-4 lg:divide-x lg:divide-border">
           <Stat
             value={<CountUp value={15} suffix="+" />}
             label="Years of Combined Leadership Experience"
+            icon={Trophy}
           />
-          <Stat value={<CountUp value={500} suffix="+" />} label="Satisfied Clients" />
-          <Stat value={<CountUp value={3} />} label="Global Offices" />
-          <Stat value="End-to-end" label="Tax & Compliance Support" />
+          <Stat value={<CountUp value={500} suffix="+" />} label="Satisfied Clients" icon={Users} />
+          <Stat value={<CountUp value={3} />} label="Global Offices" icon={MapPin} />
+          <Stat value="End-to-end" label="Tax & Compliance Support" icon={FileText} />
         </dl>
       </section>
 
@@ -552,26 +594,35 @@ function AboutPage() {
               </h2>
             </div>
           </div>
-          <div className="px-5 py-12 sm:px-8 lg:py-16 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-32">
+          <div className="px-5 py-12 max-sm:py-8 sm:px-8 lg:py-16 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-32">
             <p className="max-w-xl text-sm leading-relaxed">
               WorthPrime Tax was built on the belief that every financial decision deserves clarity,
               structure and the right perspective. We combine institutional experience with
               personalised guidance to help clients stay compliant and make confident decisions —
               today and for the future.
             </p>
-            <ol className="relative mt-10 grid gap-8 sm:grid-cols-3">
+            {/* Phones (max-sm): each pillar is a row, number on the left joined by a vertical line. */}
+            <ol className="relative mt-10 grid gap-8 max-sm:mt-7 max-sm:gap-5 sm:grid-cols-3">
+              <span
+                className="absolute top-5 bottom-11 left-[1.125rem] hidden w-px bg-primary/30 max-sm:block"
+                aria-hidden
+              />
               <span
                 className="absolute top-5 right-[16%] left-[8%] hidden h-px bg-primary/30 sm:block"
                 aria-hidden
               />
               {PILLARS.map((p, i) => (
                 <Reveal key={p.title} delay={i * 80}>
-                  <li className="relative">
-                    <span className="grid size-10 place-items-center rounded-full border border-primary bg-card text-xs font-semibold text-primary">
+                  <li className="relative max-sm:grid max-sm:grid-cols-[2.25rem_1fr] max-sm:gap-x-3.5">
+                    <span className="grid size-10 place-items-center rounded-full border border-primary bg-card text-xs font-semibold text-primary max-sm:row-span-2 max-sm:size-9">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="mt-4 text-sm font-semibold text-primary">{p.title}</h3>
-                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{p.text}</p>
+                    <h3 className="mt-4 text-sm font-semibold text-primary max-sm:mt-1.5">
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground max-sm:mt-1">
+                      {p.text}
+                    </p>
                   </li>
                 </Reveal>
               ))}
@@ -690,20 +741,44 @@ function AboutPage() {
   );
 }
 
-function IconCircle({ children }: { children: ReactNode }) {
+function IconCircle({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span className="grid size-11 shrink-0 place-items-center rounded-full border border-border bg-card text-primary">
+    <span
+      className={cn(
+        "grid size-11 shrink-0 place-items-center rounded-full border border-border bg-card text-primary",
+        className,
+      )}
+    >
       {children}
     </span>
   );
 }
 
-function Stat({ value, label }: { value: ReactNode; label: string }) {
+/**
+ * Phones (max-sm) get a 2×2 grid split by hairlines, with the icon in a soft circle left of the
+ * figure; the icon only shows there.
+ */
+function Stat({ value, label, icon: Icon }: { value: ReactNode; label: string; icon: LucideIcon }) {
   return (
-    <div className="lg:px-10 lg:first:pl-0">
+    <div className="lg:px-10 lg:first:pl-0 max-sm:relative max-sm:border-border max-sm:py-4 max-sm:pl-12 max-sm:odd:border-r max-sm:odd:pr-2 max-sm:even:ml-3 max-sm:[&:nth-child(-n+2)]:border-b">
       <dt className="sr-only">{label}</dt>
-      <dd className={cn("text-[clamp(1.6rem,2.6vw,2.1rem)]", HEADING)}>{value}</dd>
-      <dd className="mt-2 text-xs text-muted-foreground">{label}</dd>
+      <dd
+        className={cn(
+          "text-[clamp(1.6rem,2.6vw,2.1rem)] max-sm:text-[1.3rem] max-sm:leading-tight",
+          HEADING,
+        )}
+      >
+        <span
+          className="absolute top-4 left-0 hidden size-9 place-items-center rounded-full bg-muted text-primary max-sm:grid"
+          aria-hidden
+        >
+          <Icon className="size-[1.125rem]" strokeWidth={1.6} />
+        </span>
+        {value}
+      </dd>
+      <dd className="mt-2 text-xs text-muted-foreground max-sm:mt-1 max-sm:leading-snug">
+        {label}
+      </dd>
     </div>
   );
 }

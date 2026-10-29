@@ -51,9 +51,7 @@ function PricingPage() {
           <div className="max-w-[40rem] lg:max-w-[47%]">
             <h1 className="font-serif text-[clamp(2.25rem,3.9vw,3.6rem)] leading-[1.02] font-bold tracking-[-0.02em] max-sm:text-[1.6rem] max-sm:leading-[1.16]">
               <span className="block text-primary">{PRICING_PAGE.heading}</span>
-              <span className="block font-semibold text-brand-gold">
-                {PRICING_PAGE.headingMuted}
-              </span>
+              <span className="block font-semibold text-primary">{PRICING_PAGE.headingMuted}</span>
             </h1>
             <p className="mt-3 max-w-[34rem] text-base leading-snug text-muted-foreground max-sm:text-[0.9375rem] max-sm:text-foreground/85 sm:text-[1.0625rem]">
               {PRICING_PAGE.intro}
@@ -97,7 +95,8 @@ function PricingPage() {
           <h2 id="price-table" className="sr-only">
             Starting prices by service
           </h2>
-          <div className="rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 sm:p-3">
+          {/* The outer frame only wraps the desktop table; below lg the cards sit on the page. */}
+          <div className="rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 max-lg:border-0 max-lg:bg-transparent max-lg:p-0 max-lg:shadow-none lg:p-3">
             <PricingTable />
           </div>
         </Container>

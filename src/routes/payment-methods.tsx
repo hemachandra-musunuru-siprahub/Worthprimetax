@@ -44,8 +44,7 @@ function PaymentMethodsPage() {
               <span className="h-px w-12 bg-border sm:w-16" aria-hidden />
             </p>
             <h1 className="mt-4 font-sans text-[clamp(2.5rem,7vw,3.5rem)] leading-tight font-bold tracking-[-0.02em] text-primary lg:text-[clamp(2.25rem,3.6vw,3.75rem)] lg:whitespace-nowrap">
-              {PAYMENT_PAGE.heading}{" "}
-              <span className="text-brand-secondary">{PAYMENT_PAGE.headingAccent}</span>
+              {PAYMENT_PAGE.heading} <span>{PAYMENT_PAGE.headingAccent}</span>
             </h1>
             <span className="mx-auto mt-4 block h-px w-12 bg-border" aria-hidden />
           </div>

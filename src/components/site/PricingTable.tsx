@@ -158,25 +158,28 @@ export function PricingTable({ ctaLabel = "Contact Us" }: { ctaLabel?: string })
         <ContactButton label={ctaLabel} />
       </div>
 
-      <ul className="grid gap-3 sm:grid-cols-2 lg:hidden">
+      {/* Two cards a row from phones up; phones (max-sm) get tighter padding and smaller text,
+          with the number above the name so the half-width card has room. */}
+      <ul className="grid grid-cols-2 gap-3 max-sm:gap-2.5 lg:hidden">
         {ROWS.map((r) => (
-          <li key={r.key} className="flex flex-col rounded-xl border border-border bg-card p-4">
-            {/* Name on the left, starting price on the right. */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex min-w-0 items-baseline gap-2">
-                {r.number && (
-                  <span className="text-xs whitespace-pre text-muted-foreground">
-                    <RowNumber row={r} />
-                  </span>
-                )}
-                <ServiceLink service={r.service} name={r.name} />
-              </div>
-              <div className="shrink-0 text-right whitespace-nowrap">
-                <span className="sr-only">Starting From </span>
-                <PriceTag price={r.price} />
-              </div>
+          <li
+            key={r.key}
+            className="flex flex-col rounded-xl border border-border bg-card p-4 max-sm:p-3"
+          >
+            {/* Number and name across the full width, the starting price on its own line below. */}
+            <div className="flex items-baseline gap-2 max-sm:flex-col max-sm:gap-0.5 max-sm:[&_a]:text-[0.8125rem] max-sm:[&_a]:leading-snug">
+              {r.number && (
+                <span className="text-xs whitespace-pre text-muted-foreground max-sm:text-[0.6875rem]">
+                  <RowNumber row={r} />
+                </span>
+              )}
+              <ServiceLink service={r.service} name={r.name} />
             </div>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+            <div className="mt-2 max-sm:[&>span:last-child]:px-2 max-sm:[&>span:last-child]:text-xs">
+              <span className="sr-only">Starting From </span>
+              <PriceTag price={r.price} />
+            </div>
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground max-sm:text-xs max-sm:leading-snug">
               {r.included}
             </p>
           </li>

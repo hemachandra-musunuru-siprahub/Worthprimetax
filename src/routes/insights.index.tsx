@@ -284,7 +284,9 @@ function TopicCarousel({ insights }: { insights: Insight[] }) {
           return (
             <article
               key={insight.slug}
-              className="group flex shrink-0 basis-[88%] snap-start gap-4 rounded-xl border border-border bg-card p-3 sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]"
+              // `relative` keeps the card's sr-only text inside the scroller; without it that
+              // absolutely positioned text escaped to the page and widened it on phones.
+              className="group relative flex shrink-0 basis-[88%] snap-start gap-4 rounded-xl border border-border bg-card p-3 sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]"
             >
               {image && (
                 <img

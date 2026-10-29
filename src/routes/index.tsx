@@ -53,6 +53,7 @@ import { PricingMarquee } from "@/components/site/PricingMarquee";
 import { SERVICE_IMAGES } from "@/components/site/serviceImages";
 import { cn } from "@/lib/utils";
 import heroImage from "@/assets/worthprime-hero-team.webp";
+import heroMobileImage from "@/assets/home-hero-mobile.webp";
 import advisersImage from "@/assets/worthprime-advisers-blue.webp";
 // import { FOUNDER_PHOTOS } from "@/components/site/founderPhotos";
 import workspaceImage from "@/assets/worthprime-workspace.webp";
@@ -110,7 +111,18 @@ function Hero() {
        * The photo fills the hero at every size; a soft white wash, strongest on the left, keeps the
        * navy copy readable while the advisers stay clear on the right, as in the approved design.
        */}
-      <div className="absolute inset-0 -z-10">
+      {/* Phones use the advisers photo cut from the approved mobile design (its baked-in text and
+          buttons removed), in the same place: the right half, from just above the heading. Its
+          left and bottom edges fade into the white, so the copy beside it sits on plain white. */}
+      <img
+        src={heroMobileImage}
+        alt=""
+        width={432}
+        height={812}
+        fetchPriority="high"
+        className="absolute top-[4.5rem] right-0 -z-10 hidden h-auto w-1/2 [mask-composite:intersect] [mask-image:linear-gradient(to_right,transparent,black_6%),linear-gradient(to_bottom,transparent,black_16%,black_70%,transparent)] max-sm:block"
+      />
+      <div className="absolute inset-0 -z-10 max-sm:hidden">
         <img
           src={heroImage}
           alt="Tax advisers reviewing financial documents together"
@@ -119,21 +131,29 @@ function Hero() {
           fetchPriority="high"
           className="h-full w-full object-cover object-[68%_center]"
         />
+        {/* A soft left-side fade, as on desktop (no flat white wash over the photo). Tablets, where
+            the copy runs further across the photo, get a slightly stronger fade behind the text. */}
         <div
-          className="absolute inset-0 bg-background/50 lg:bg-transparent lg:bg-linear-to-r lg:from-background/60 lg:from-15% lg:via-background/25 lg:via-45% lg:to-transparent lg:to-65% lg:portrait:bg-background/65 lg:portrait:bg-none"
+          className="absolute inset-0 bg-linear-to-r from-background/60 from-15% via-background/25 via-45% to-transparent to-65% max-lg:from-background/85 max-lg:from-25% max-lg:via-background/55 max-lg:via-55% max-lg:to-85% lg:portrait:from-background/85 lg:portrait:from-25% lg:portrait:via-background/55 lg:portrait:via-55% lg:portrait:to-85%"
           aria-hidden
         />
       </div>
       {/* Wider than the standard container, like the reference; the nav widens to match on this page. */}
       <Container className="relative max-w-[1540px] lg:px-10">
-        <div className="flex max-w-[900px] flex-col pt-16 pb-20 sm:pt-20 sm:pb-24 lg:landscape:pt-[min(4rem,8svh)] lg:landscape:pb-[min(5rem,8svh)]">
+        <div className="flex max-w-[900px] flex-col pt-16 pb-20 max-sm:pt-10 max-sm:pb-9 sm:pt-20 sm:pb-24 lg:landscape:pt-[min(4rem,8svh)] lg:landscape:pb-[min(5rem,8svh)]">
           {/* Same heading size as the Services hero (BackdropHero). */}
-          <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.12] font-bold tracking-[-0.02em] text-primary">
-            {/* Two lines from tablet up, as requested by the client: the break falls after "a". */}
-            <span className="sm:block sm:whitespace-nowrap">Your Business Is More Than a</span>{" "}
-            <span className="sm:block sm:whitespace-nowrap">Tax Return. So Are We.</span>
+          <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.12] font-bold tracking-[-0.02em] text-primary max-sm:text-[1.75rem] max-sm:leading-[1.1]">
+            {/* Two lines from tablet up, as requested by the client: the break falls after "a".
+                Phones get four set lines. */}
+            <span className="sm:block sm:whitespace-nowrap">
+              <span className="max-sm:block">Your Business</span>{" "}
+              <span className="max-sm:block">Is More Than</span> a
+            </span>{" "}
+            <span className="sm:block sm:whitespace-nowrap">
+              Tax Return. <span className="max-sm:block">So Are We.</span>
+            </span>
           </h1>
-          <p className="mt-2 max-w-[37rem] text-base leading-relaxed text-foreground/85 sm:text-lg md:max-w-none xl:text-[clamp(1rem,2.1svh,1.25rem)]">
+          <p className="mt-2 max-w-[37rem] text-base leading-relaxed text-foreground/85 max-sm:mt-3 max-sm:max-w-[10.5rem] max-sm:text-xs max-sm:leading-[1.5] sm:text-lg md:max-w-none xl:text-[clamp(1rem,2.1svh,1.25rem)]">
             {/* Four set lines from tablet up, as requested by the client. */}
             <span className="md:block md:whitespace-nowrap">
               Tax, accounting, payroll and compliance are interconnected.
@@ -148,16 +168,21 @@ function Hero() {
               responsibilities with clarity, confidence and precision.
             </span>
           </p>
-          <div className="mt-8 flex flex-wrap gap-4 xl:mt-[clamp(1rem,3.4svh,2rem)]">
+          {/* Phones: both buttons share one row across the full width. */}
+          <div className="mt-8 flex flex-wrap gap-4 max-sm:mt-5 max-sm:flex-nowrap max-sm:gap-2 xl:mt-[clamp(1rem,3.4svh,2rem)]">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] sm:text-base"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] max-sm:flex-auto max-sm:justify-center max-sm:gap-1.5 max-sm:px-3 max-sm:py-3 max-sm:text-[0.8125rem] max-sm:whitespace-nowrap sm:text-base"
             >
-              Our Services <ArrowRight className="size-4" aria-hidden />
+              <span>
+                {/* "Explore" is dropped on the narrowest phones so both buttons still fit in one row. */}
+                <span className="hidden min-[360px]:max-sm:inline">Explore </span>Our Services
+              </span>
+              <ArrowRight className="size-4" aria-hidden />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 rounded-md border border-primary bg-background/70 px-6 py-2.5 text-sm font-semibold text-primary transition-transform hover:scale-[1.03] sm:text-base"
+              className="inline-flex items-center gap-2 rounded-md border border-primary bg-background/70 px-6 py-2.5 text-sm font-semibold text-primary transition-transform hover:scale-[1.03] max-sm:flex-auto max-sm:justify-center max-sm:bg-background max-sm:px-3 max-sm:py-3 max-sm:text-[0.8125rem] max-sm:whitespace-nowrap sm:text-base"
             >
               Request a Quote
             </Link>

@@ -39,7 +39,7 @@ function ServicesPage() {
       <BackdropHero
         lines={[
           [{ text: "The Numbers Behind Your Business." }],
-          [{ text: "The Perspective Beyond Them.", accent: true }],
+          [{ text: "The Perspective Beyond Them." }],
         ]}
         intro="From Individual Tax and Form 1040 filings to U.S. business tax, Form 1120, Form 1120S and Form 1065, our work is designed around accuracy, compliance and the broader objectives of the client. Whether you are forming an LLC, operating a C Corp, S Corp or Partnership, managing payroll, maintaining your books through QuickBooks, or responding to an IRS Audit, we bring the relevant expertise into sharper focus."
         image={heroBackdrop}
@@ -83,8 +83,8 @@ function ServicesPage() {
         <h2 className="mt-5 text-[clamp(1.9rem,4.4vw,3.2rem)] leading-tight">
           Starting From, <span className="text-primary">Before Scope.</span>
         </h2>
-        {/* Same table as the Pricing page. */}
-        <div className="mt-8 rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 sm:p-3">
+        {/* Same table as the Pricing page; the outer frame only wraps the desktop table. */}
+        <div className="mt-8 rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 max-lg:border-0 max-lg:bg-transparent max-lg:p-0 max-lg:shadow-none lg:p-3">
           <PricingTable ctaLabel="Request a Quote" />
         </div>
       </Section>
