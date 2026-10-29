@@ -467,8 +467,10 @@ function AboutPage() {
             <path d="M0.18,0 L0.84,0 L0.752,0.2 Q0.73,0.25 0.748,0.3 L1,1 L0.35,1 L0.023,0.3 Q0,0.25 0.036,0.2 Z" />
           </clipPath>
         </svg>
-        <div className="mx-auto grid max-w-[1440px] items-center gap-8 lg:grid-cols-[1fr_1.15fr_auto] lg:gap-0">
-          <div className="px-5 pt-24 sm:px-8 lg:pt-28 lg:pb-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
+        {/* Phones (max-sm) mirror the desktop layout: copy on top, then the chevron photo with the
+            points and "People / Process / Perspective" beside it. */}
+        <div className="mx-auto grid max-w-[1440px] items-center gap-8 max-sm:grid-cols-[1.35fr_1fr] max-sm:gap-x-3 max-sm:gap-y-6 lg:grid-cols-[1fr_1.15fr_auto] lg:gap-0">
+          <div className="px-5 pt-24 max-sm:col-span-2 sm:px-8 lg:pt-28 lg:pb-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
             <h1 className={cn("text-[clamp(2.3rem,3.9vw,3.6rem)]", HEADING)}>
               Experienced Professionals.{" "}
               <span className="block text-brand-secondary">Real Perspective.</span>
@@ -484,14 +486,14 @@ function AboutPage() {
             alt="WorthPrime logo on a marble office wall"
             width={1672}
             height={941}
-            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] lg:aspect-auto lg:min-h-[560px]"
+            className="aspect-[4/3] h-full w-full object-cover object-[60%_center] [clip-path:url(#about-hero-shape)] max-sm:aspect-[4/5] lg:aspect-auto lg:min-h-[560px]"
           />
-          <div className="flex flex-col justify-between gap-8 px-5 pb-8 sm:px-8 lg:h-full lg:pt-24 lg:pb-10 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-6">
-            <ul className="flex flex-wrap gap-5 lg:flex-col lg:gap-7">
+          <div className="flex flex-col justify-between gap-8 px-5 pb-8 max-sm:h-full max-sm:gap-6 max-sm:py-2 max-sm:pr-5 max-sm:pl-0 sm:px-8 lg:h-full lg:pt-24 lg:pb-10 lg:pr-[max(2rem,calc((100vw-1200px)/2))] lg:pl-6">
+            <ul className="flex flex-wrap gap-5 max-sm:flex-col lg:flex-col lg:gap-7">
               {HERO_POINTS.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 text-sm font-semibold text-primary"
+                  className="flex items-center gap-3 text-sm font-semibold text-primary max-sm:gap-2 max-sm:text-xs"
                 >
                   <IconCircle>
                     <Icon className="size-5" strokeWidth={1.5} aria-hidden />
@@ -500,7 +502,7 @@ function AboutPage() {
                 </li>
               ))}
             </ul>
-            <p className="hidden text-xs leading-loose tracking-[0.2em] text-muted-foreground uppercase lg:block">
+            <p className="hidden text-xs leading-loose tracking-[0.2em] text-muted-foreground uppercase max-sm:block max-sm:text-[0.65rem] max-sm:tracking-[0.16em] lg:block">
               People
               <br />
               Process

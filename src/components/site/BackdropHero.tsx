@@ -25,9 +25,9 @@ export function BackdropHero({
   return (
     <section className="relative isolate overflow-hidden bg-background">
       <Container className="relative max-w-[1540px] lg:px-10">
-        <div className="flex flex-col py-8 sm:py-10 lg:min-h-[min(calc(100svh-4rem),30rem)] lg:max-w-[52%] lg:justify-center lg:py-12">
+        <div className="flex flex-col py-8 max-sm:pb-10 sm:py-10 lg:min-h-[min(calc(100svh-4rem),30rem)] lg:max-w-[52%] lg:justify-center lg:py-12">
           {crumbs && <Breadcrumbs crumbs={crumbs} className="mb-4" />}
-          <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.16] font-bold tracking-[-0.02em] text-primary">
+          <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.16] font-bold tracking-[-0.02em] text-primary max-sm:text-[1.6rem]">
             {lines.map((line, i) => (
               <span key={i} className="block">
                 {line.map((part) => (
@@ -73,19 +73,22 @@ export function BackdropHero({
       </Container>
 
       {/* From lg the artwork covers the right 72% so the copy keeps more room; its pale left edge fades into the page. */}
-      <div className="relative aspect-[5/2] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:-z-10 lg:aspect-auto lg:w-[72%]">
+      {/* Phones: the artwork sits behind the copy as a background (like the home hero), under a
+          white wash so the text stays readable, and the price strip shows on the first screen. */}
+      <div className="relative aspect-[5/2] w-full max-sm:absolute max-sm:inset-0 max-sm:-z-10 max-sm:aspect-auto lg:absolute lg:inset-y-0 lg:right-0 lg:-z-10 lg:aspect-auto lg:w-[72%]">
         <img
           src={image}
           alt=""
           width={1671}
           height={941}
           fetchPriority="high"
-          className="h-full w-full object-cover object-[85%_center] lg:object-[right_25%]"
+          className="h-full w-full object-cover object-[85%_center] max-sm:object-right lg:object-[right_25%]"
         />
         <div
           aria-hidden
           className="absolute inset-y-0 left-0 hidden w-1/4 bg-linear-to-r from-background to-transparent lg:block"
         />
+        <div aria-hidden className="absolute inset-0 hidden bg-linear-to-b from-background/90 via-background/75 to-background/40 max-sm:block" />
       </div>
     </section>
   );

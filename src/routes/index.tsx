@@ -80,7 +80,9 @@ function Index() {
       {/* On large screens the hero fills the first screen so the price strip sits on its bottom edge.
           The layout's nav spacer moves from this wrapper into the hero, so the photo still runs up
           behind the transparent nav. */}
-      <div className="before:!hidden lg:flex lg:min-h-svh lg:flex-col">
+      {/* Portrait tablets (e.g. iPad at 1024x1366) skip the full-screen stretch: on a tall screen it
+          made the photo huge and squeezed the copy into the top. The hero sizes to its content there. */}
+      <div className="before:!hidden lg:landscape:flex lg:landscape:min-h-svh lg:landscape:flex-col">
         <Hero />
         <PricingMarquee />
       </div>
@@ -118,13 +120,13 @@ function Hero() {
           className="h-full w-full object-cover object-[68%_center]"
         />
         <div
-          className="absolute inset-0 bg-background/50 lg:bg-transparent lg:bg-linear-to-r lg:from-background/60 lg:from-15% lg:via-background/25 lg:via-45% lg:to-transparent lg:to-65%"
+          className="absolute inset-0 bg-background/50 lg:bg-transparent lg:bg-linear-to-r lg:from-background/60 lg:from-15% lg:via-background/25 lg:via-45% lg:to-transparent lg:to-65% lg:portrait:bg-background/65 lg:portrait:bg-none"
           aria-hidden
         />
       </div>
       {/* Wider than the standard container, like the reference; the nav widens to match on this page. */}
       <Container className="relative max-w-[1540px] lg:px-10">
-        <div className="flex max-w-[900px] flex-col pt-16 pb-20 sm:pt-20 sm:pb-24 lg:pt-[min(4rem,8svh)] lg:pb-[min(5rem,8svh)]">
+        <div className="flex max-w-[900px] flex-col pt-16 pb-20 sm:pt-20 sm:pb-24 lg:landscape:pt-[min(4rem,8svh)] lg:landscape:pb-[min(5rem,8svh)]">
           {/* Same heading size as the Services hero (BackdropHero). */}
           <h1 className="font-serif text-[clamp(2rem,3.4vw,3.5rem)] leading-[1.12] font-bold tracking-[-0.02em] text-primary">
             {/* Two lines from tablet up, as requested by the client: the break falls after "a". */}
