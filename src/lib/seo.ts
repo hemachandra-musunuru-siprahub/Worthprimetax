@@ -1,7 +1,7 @@
 import { LINKS, SITE } from "@/data/site";
 // Temporary social sharing image (see SITE in src/data/site.ts): needs client approval.
 import socialImage from "@/assets/social-share.jpg";
-import logoImage from "@/assets/worthprime-logo.webp";
+import logoImage from "@/assets/worthprime-logo-2026.webp";
 
 export function absoluteUrl(path: string) {
   return new URL(path, SITE.url).toString();

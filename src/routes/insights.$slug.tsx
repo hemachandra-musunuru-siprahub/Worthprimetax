@@ -2,12 +2,11 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { formatInsightDate, getInsight, HAS_LINKEDIN, INSIGHTS_PAGE, SITE } from "@/data/site";
 import { absoluteUrl, breadcrumbJsonLd, insightCrumbs, jsonLdScript, seoHead } from "@/lib/seo";
-import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { Container, Section } from "@/components/site/primitives";
 import { InsightTag } from "@/components/site/ArticleCard";
 import { INSIGHT_IMAGES } from "@/components/site/insightImages";
 import { LinkedInBand } from "@/components/site/LinkedInBand";
-import { CtaBand } from "@/components/site/CtaBand";
+// import { CtaBand } from "@/components/site/CtaBand";
 import { PricingMarquee } from "@/components/site/PricingMarquee";
 
 export const Route = createFileRoute("/insights/$slug")({
@@ -72,9 +71,7 @@ function InsightPage() {
     <>
       <article className="bg-linear-to-b from-tint to-background pt-8 pb-10 sm:pt-10">
         <Container className="max-w-[880px]">
-          <Breadcrumbs crumbs={insightCrumbs(insight)} />
-
-          <div className="mt-6 flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <InsightTag tag={insight.tag} />
             <time dateTime={insight.date} className="text-sm text-muted-foreground">
               {formatInsightDate(insight.date)}
@@ -159,7 +156,7 @@ function InsightPage() {
         </Container>
       )}
 
-      <CtaBand />
+      {/* <CtaBand /> */}
     </>
   );
 }

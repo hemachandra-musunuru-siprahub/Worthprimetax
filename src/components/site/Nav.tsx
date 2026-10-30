@@ -4,7 +4,7 @@ import { ChevronDown, ChevronRight, CreditCard, Menu, X } from "lucide-react";
 import { SERVICES } from "@/data/services";
 import { LINKS } from "@/data/site";
 import { cn } from "@/lib/utils";
-import logoImage from "@/assets/worthprime-logo.webp";
+import logoImage from "@/assets/worthprime-logo-2026.webp";
 import { heroOverlay } from "./heroOverlay";
 
 // One width on every page so the logo and buttons never shift when navigating; matches the home hero edges.
@@ -12,7 +12,7 @@ const NAV_WIDTH = "max-w-[1492px]";
 
 // Active page gets a thin underline in the link colour (TanStack Link sets data-status="active").
 const navLink =
-  "relative px-3 py-2 text-sm font-bold transition-colors after:pointer-events-none after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity data-[status=active]:after:opacity-100";
+  "relative px-2 py-2 text-base font-bold whitespace-nowrap transition-colors after:pointer-events-none after:absolute after:inset-x-2 xl:px-3 xl:after:inset-x-3 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-current after:opacity-0 after:transition-opacity data-[status=active]:after:opacity-100";
 
 const NAV_ITEMS = [
   { label: "About", to: "/about" as const },
@@ -69,23 +69,32 @@ export function Nav() {
           )}
         >
           <Link to="/" className="flex shrink-0 items-center pr-3" aria-label="WorthPrime Tax home">
+            {/* Logo mark with the tagline as live text underneath (not part of the image). */}
             <span
               className={cn(
-                "flex w-28 items-center overflow-hidden px-2 transition-[height] duration-300",
-                scrolled ? "h-10" : "h-12",
+                "flex flex-col items-center justify-center px-2 transition-[height] duration-300",
+                scrolled ? "h-12" : "h-14",
               )}
             >
               <img
                 src={logoImage}
                 alt="WorthPrime Tax"
-                width={1438}
-                height={1094}
+                width={600}
+                height={383}
                 className={cn(
-                  "h-full w-full object-contain object-left transition-[filter] duration-300",
+                  "h-[calc(100%-0.75rem)] w-auto object-contain object-left transition-[filter] duration-300",
                   // White logo over the navy hero.
                   overlay && "brightness-0 invert",
                 )}
               />
+              <span
+                className={cn(
+                  "mt-[3px] text-[0.4375rem] leading-none font-medium whitespace-nowrap",
+                  overlay ? "text-hero-foreground" : "text-primary",
+                )}
+              >
+                Your Compliance Partner!
+              </span>
             </span>
           </Link>
 
@@ -143,7 +152,7 @@ export function Nav() {
               target="_blank"
               rel="noreferrer noopener"
               className={cn(
-                "px-3 py-2 text-xs font-bold transition-colors",
+                "px-2 py-2 text-base font-bold whitespace-nowrap transition-colors xl:px-3",
                 overlay
                   ? "text-hero-foreground/80 hover:text-hero-foreground"
                   : "text-muted-foreground hover:text-nav-link-hover",
@@ -218,14 +227,22 @@ export function Nav() {
         )}
       >
         <div className="flex min-h-16 items-center justify-between border-b border-nav-border pr-4 pl-4">
-          <Link to="/" onClick={() => setOpen(false)} aria-label="WorthPrime Tax home">
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+            aria-label="WorthPrime Tax home"
+            className="flex flex-col items-center"
+          >
             <img
               src={logoImage}
               alt="WorthPrime Tax"
-              width={1438}
-              height={1094}
+              width={600}
+              height={383}
               className="h-11 w-auto object-contain"
             />
+            <span className="mt-1 text-[0.4375rem] leading-none font-medium whitespace-nowrap text-primary">
+              Your Compliance Partner!
+            </span>
           </Link>
           <button
             type="button"

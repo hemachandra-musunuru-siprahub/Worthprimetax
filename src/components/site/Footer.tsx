@@ -21,7 +21,7 @@ import { SERVICES } from "@/data/services";
 import { HAS_LINKEDIN, LINKS, OFFICES } from "@/data/site";
 import { Container } from "./primitives";
 import { WhatsAppIcon } from "./ContactCluster";
-import logoImage from "@/assets/worthprime-logo.webp";
+import logoImage from "@/assets/worthprime-logo-2026.webp";
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   "us-tax-services": FileText,
@@ -89,15 +89,23 @@ export function Footer() {
         {/* max-sm: classes shorten the footer on phones only; sm and up are unchanged. */}
         <div className="grid gap-10 pt-12 pb-8 max-sm:gap-8 max-sm:pt-10 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_0.8fr_1fr] lg:gap-10">
           <div>
-            <Link to="/" aria-label="WorthPrime Tax home" className={`inline-block ${focusRing}`}>
+            <Link
+              to="/"
+              aria-label="WorthPrime Tax home"
+              className={`inline-flex flex-col items-center ${focusRing}`}
+            >
               <img
                 src={logoImage}
                 alt="WorthPrime Tax"
-                width={1438}
-                height={1094}
+                width={600}
+                height={383}
                 loading="lazy"
-                className="h-16 w-auto object-contain max-sm:h-12"
+                className="h-[4.5rem] w-auto object-contain max-sm:h-12"
               />
+              {/* Tagline as live text, not part of the logo image. */}
+              <span className="mt-1.5 text-[0.5625rem] leading-none font-medium whitespace-nowrap text-primary max-sm:text-[0.5rem]">
+                Your Compliance Partner!
+              </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Your trusted partner for U.S. tax, compliance and business advisory services.

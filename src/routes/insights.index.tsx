@@ -15,7 +15,7 @@ import { Container } from "@/components/site/primitives";
 import { InsightTag } from "@/components/site/ArticleCard";
 import { INSIGHT_IMAGES } from "@/components/site/insightImages";
 import { LinkedInBand } from "@/components/site/LinkedInBand";
-import { CtaBand } from "@/components/site/CtaBand";
+// import { CtaBand } from "@/components/site/CtaBand";
 
 export const Route = createFileRoute("/insights/")({
   head: () =>
@@ -77,7 +77,7 @@ function InsightsPage() {
         </Container>
       </section>
 
-      <CtaBand />
+      {/* <CtaBand /> */}
     </>
   );
 }

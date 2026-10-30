@@ -17,8 +17,7 @@ import {
 } from "lucide-react";
 import { FOUNDERS, OFFICES } from "@/data/site";
 import { CountUp, Reveal, Section, SectionLabel } from "@/components/site/primitives";
-import { CtaBand } from "@/components/site/CtaBand";
-import { HeroCta } from "@/components/site/HeroCta";
+// import { CtaBand } from "@/components/site/CtaBand";
 import {
   Dialog,
   DialogContent,
@@ -512,17 +511,23 @@ function AboutPage() {
               client-centric approach to help individuals and businesses navigate U.S. tax
               requirements with confidence.
             </p>
-            {/* Both buttons share one row, like the home hero on phones; below 360px they wrap. */}
-            <div className="mt-6 hidden gap-2 max-sm:flex max-[359px]:flex-wrap">
-              <HeroCta
-                label="Book a Consultation"
-                className="flex-auto justify-center gap-1.5 px-2.5 py-3 text-xs whitespace-nowrap"
-              />
+            {/* Phones only: the same two buttons as the home hero, in one row. */}
+            <div className="mt-6 hidden gap-2 max-sm:flex">
               <Link
                 to="/services"
-                className="inline-flex flex-auto items-center justify-center rounded-md border border-primary bg-background px-2.5 py-3 text-xs font-semibold whitespace-nowrap text-primary"
+                className="inline-flex flex-auto items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-3 text-[0.8125rem] leading-[1.43] font-semibold whitespace-nowrap text-primary-foreground"
               >
-                Explore Tax Services
+                <span>
+                  {/* "Explore" is dropped on the narrowest phones so both buttons still fit. */}
+                  <span className="hidden min-[360px]:inline">Explore </span>Our Services
+                </span>
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex flex-auto items-center justify-center rounded-md border border-primary bg-background px-3 py-3 text-[0.8125rem] leading-[1.43] font-semibold whitespace-nowrap text-primary"
+              >
+                Request a Quote
               </Link>
             </div>
           </div>
@@ -736,7 +741,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <CtaBand />
+      {/* <CtaBand /> */}
     </>
   );
 }

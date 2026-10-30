@@ -111,10 +111,9 @@ export const PROCESS = [
 
 /** Home page contact section, beside the enquiry form. */
 export const HOME_CONTACT = {
-  heading: "Let’s Talk About",
-  headingAccent: "What Comes Next.",
-  intro:
-    "Whether you’re an individual, entrepreneur or growing business, we’re here to help you stay compliant and confident. Share a few details and our team will get back to you shortly.",
+  heading: "Questions to resolve.",
+  headingAccent: "Decisions to make.",
+  intro: "We’re here to help—connect with us, we’re just a click away...",
   replyNote: "You’ll hear from us within one business day",
 };
 
@@ -239,7 +238,7 @@ export const FOUNDERS = [
   {
     name: "Abuzer Ahmed Siddiqui",
     title: "Co-Founder",
-    credential: "Qualified Company Secretary (ICSI) · 15+ years · PwC and Deloitte",
+    credential: "Qualified Company Secretary (ICSI) · 15+ years · Ex-PwC and Deloitte",
     summary:
       "Brings extensive experience across corporate advisory, compliance and business structuring, with a strong focus on client-centric solutions.",
     bio: [
@@ -251,7 +250,7 @@ export const FOUNDERS = [
   {
     name: "Jafiruddin Mohammad",
     title: "Co-Founder",
-    credential: "Certified Public Accountant · 15 years · PwC and PepsiCo",
+    credential: "Certified Public Accountant · 15 years · Ex-PwC and PepsiCo",
     summary:
       "Combines deep expertise in audit, accounting, financial planning and tax, with an entrepreneurial perspective to help clients grow with confidence.",
     bio: [

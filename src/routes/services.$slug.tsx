@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getService } from "@/data/services";
 import { breadcrumbJsonLd, seoHead, serviceCrumbs } from "@/lib/seo";
-import { getServicePage } from "@/data/servicePages";
 import { Section } from "@/components/site/primitives";
 import { ServiceDetailFeature } from "@/components/site/ServiceDetailFeature";
 import { getServiceDetailMedia } from "@/components/site/serviceDetailMedia";
@@ -58,7 +57,6 @@ function ServiceDetail() {
   return (
     <ServiceDetailFeature
       service={service}
-      page={getServicePage(service)}
       media={getServiceDetailMedia(service.slug, service.name)}
     />
   );

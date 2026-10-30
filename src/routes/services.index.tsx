@@ -9,7 +9,7 @@ import { ServiceCard } from "@/components/site/ServiceCard";
 import { SERVICE_GRID } from "@/components/site/serviceGrid";
 import { PricingTable } from "@/components/site/PricingTable";
 import { BackdropHero } from "@/components/site/BackdropHero";
-import { CtaBand } from "@/components/site/CtaBand";
+// import { CtaBand } from "@/components/site/CtaBand";
 import { PricingMarquee } from "@/components/site/PricingMarquee";
 import { cn } from "@/lib/utils";
 import heroBackdrop from "@/assets/service-pages/hero-backdrop.webp";
@@ -133,7 +133,7 @@ function ServicesPage() {
         </a>
       </Container>
 
-      <CtaBand />
+      {/* <CtaBand /> */}
     </>
   );
 }

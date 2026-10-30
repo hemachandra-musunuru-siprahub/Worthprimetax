@@ -95,14 +95,14 @@ export function ServiceCard({
         </div>
 
         {/* Back */}
-        <div className="flip-back surface-card flex h-full w-full flex-col justify-between border-hero bg-hero p-6 text-hero-foreground max-sm:rounded-2xl max-sm:p-3 lg:p-3 xl:p-4">
-          <div className="min-h-0 overflow-hidden">
-            {/* Phones: the half-width back shows a shortened summary only. */}
-            <p className="text-sm text-hero-foreground/90 max-sm:line-clamp-8 max-sm:text-[0.7rem] max-sm:leading-snug lg:text-xs lg:leading-snug">
-              {service.summary}
+        <div className="flip-back surface-card flex h-full w-full flex-col justify-between gap-2 border-hero bg-hero p-6 text-hero-foreground max-sm:rounded-2xl max-sm:p-3 lg:p-3 xl:p-4">
+          {/* The full list is shown; longer lists scroll inside the card so "View Service" stays put. */}
+          <div className="min-h-0 overflow-y-auto overscroll-contain pr-1 [scrollbar-color:var(--color-hero-muted)_transparent] [scrollbar-width:thin]">
+            <p className="mb-2 text-xs font-semibold text-hero-foreground max-sm:mb-1 max-sm:text-[0.65rem] lg:text-[11px]">
+              {service.capabilitiesLabel}:
             </p>
-            <ul className="mt-4 space-y-1.5 max-sm:hidden text-xs text-hero-muted lg:mt-3 lg:space-y-1 lg:text-[11px] lg:leading-snug">
-              {service.capabilities.slice(0, 4).map((c) => (
+            <ul className="space-y-1.5 text-xs text-hero-muted max-sm:space-y-1 max-sm:text-[0.65rem] max-sm:leading-snug lg:space-y-1 lg:text-[11px] lg:leading-snug">
+              {service.capabilities.slice(0, service.cardCapabilityCount).map((c) => (
                 <li key={c} className="flex gap-2">
                   <span className="text-hero-foreground">—</span>
                   <span>{c}</span>

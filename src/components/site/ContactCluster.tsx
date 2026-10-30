@@ -11,10 +11,11 @@ export function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 const button =
-  "grid size-11 place-items-center rounded-full border shadow-sm transition duration-200 sm:size-12 motion-reduce:transition-none";
+  "grid size-13 place-items-center rounded-full border shadow-lg shadow-hero/30 transition duration-200 sm:size-14 motion-reduce:transition-none";
 const interactive =
-  "hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:hover:translate-y-0";
-const navy = "border-hero bg-hero text-hero-foreground";
+  "hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:hover:translate-y-0";
+const whatsapp = "border-whatsapp bg-whatsapp text-card";
+const outlined = "border-2 border-hero bg-card text-hero";
 
 const items = [
   {
@@ -22,21 +23,21 @@ const items = [
     label: "Chat on WhatsApp",
     Icon: WhatsAppIcon,
     external: true,
-    className: navy,
+    className: whatsapp,
   },
   {
     href: LINKS.phoneHref,
     label: `Call ${LINKS.phone}`,
     Icon: Phone,
     external: false,
-    className: navy,
+    className: outlined,
   },
   {
     href: `mailto:${LINKS.email}`,
     label: `Email ${LINKS.email}`,
     Icon: Mail,
     external: false,
-    className: navy,
+    className: outlined,
   },
 ];
 
@@ -45,7 +46,7 @@ export function ContactCluster() {
   return (
     <nav
       aria-label="Quick contact"
-      className="fixed bottom-4 right-4 z-40 flex flex-col gap-2 sm:bottom-5 sm:right-5"
+      className="fixed bottom-4 right-4 z-40 flex flex-col gap-3 sm:bottom-5 sm:right-5"
     >
       {items.map(({ href, label, Icon, external, className }) => (
         <a
@@ -56,7 +57,7 @@ export function ContactCluster() {
           {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
           className={cn(button, interactive, className)}
         >
-          <Icon className="size-5 sm:size-6" />
+          <Icon className="size-6 sm:size-7" />
         </a>
       ))}
     </nav>

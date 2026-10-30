@@ -26,15 +26,22 @@ function Sentences({ text }: { text: string }) {
  */
 export function BackdropHero({
   lines,
+  tagline,
   intro,
   image,
   crumbs,
+  showCta = true,
 }: {
   lines: HeroLine[];
-  intro: string;
+  /** A second, smaller heading line under the title. */
+  tagline?: string;
+  /** One paragraph, or several. */
+  intro: string | string[];
   image: string;
   crumbs?: Crumb[];
+  showCta?: boolean;
 }) {
+  const paragraphs = typeof intro === "string" ? [intro] : intro;
   return (
     <section className="relative isolate overflow-hidden bg-background">
       <Container className="relative max-w-[1540px] lg:px-10">
@@ -79,14 +86,29 @@ export function BackdropHero({
               </span>
             ))}
           </h1>
-          {/* pre-line keeps any "\n" in the intro as a line break. */}
-          <p className="mt-5 max-w-[38rem] text-[0.9375rem] leading-relaxed whitespace-pre-line text-foreground/85 max-sm:max-w-[13rem] max-sm:text-sm sm:text-base xl:text-[1.0625rem]">
-            {intro}
-          </p>
-          <div className="mt-6">
-            {/* Services and service pages ask for a quote rather than a general contact. */}
-            <HeroCta label="Request a Quote" className="max-sm:px-10 max-sm:py-3" />
+          {tagline && (
+            <p className="mt-3 font-serif text-[clamp(1.25rem,2vw,1.75rem)] leading-snug font-bold text-primary">
+              {tagline}
+            </p>
+          )}
+          {/* pre-line keeps any "\n" in the intro as a line break. A single short intro stays in
+              the narrow column beside the phone artwork; longer copy uses the full width. */}
+          <div
+            className={cn(
+              "mt-5 max-w-[38rem] space-y-4 text-[0.9375rem] leading-relaxed whitespace-pre-line text-foreground/85 max-sm:text-sm sm:text-base xl:text-[1.0625rem]",
+              paragraphs.length === 1 && "max-sm:max-w-[13rem]",
+            )}
+          >
+            {paragraphs.map((p) => (
+              <p key={p.slice(0, 40)}>{p}</p>
+            ))}
           </div>
+          {showCta && (
+            <div className="mt-6">
+              {/* Services and service pages ask for a quote rather than a general contact. */}
+              <HeroCta label="Request a Quote" className="max-sm:px-10 max-sm:py-3" />
+            </div>
+          )}
         </div>
       </Container>
 
@@ -102,9 +124,15 @@ export function BackdropHero({
         fetchPriority="high"
         className="absolute inset-0 -z-10 hidden size-full object-cover object-[right_bottom] max-sm:block"
       />
+      {/* Several paragraphs run the full width on phones, so the frosted panel widens to match. */}
       <div
         aria-hidden
-        className="absolute inset-y-0 left-0 -z-10 hidden w-[78%] bg-linear-to-r from-background/90 via-background/75 to-background/0 backdrop-blur-md [mask-image:linear-gradient(to_right,black_55%,transparent)] max-sm:block"
+        className={cn(
+          "absolute inset-y-0 left-0 -z-10 hidden bg-linear-to-r from-background/90 via-background/75 backdrop-blur-md max-sm:block",
+          paragraphs.length === 1
+            ? "w-[78%] to-background/0 [mask-image:linear-gradient(to_right,black_55%,transparent)]"
+            : "w-full to-background/40 [mask-image:linear-gradient(to_right,black_85%,transparent)]",
+        )}
       />
       <div className="relative aspect-[5/2] w-full max-sm:hidden lg:absolute lg:inset-y-0 lg:right-0 lg:-z-10 lg:aspect-auto lg:w-[72%]">
         <img

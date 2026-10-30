@@ -4,7 +4,7 @@ import { seoHead } from "@/lib/seo";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { CONTACT_PAGE, LINKS, OFFICES } from "@/data/site";
 import { Container } from "@/components/site/primitives";
-import { CtaBand } from "@/components/site/CtaBand";
+// import { CtaBand } from "@/components/site/CtaBand";
 import { ContactSection } from "@/components/site/ContactSection";
 import { WhatsAppIcon } from "@/components/site/ContactCluster";
 import { cn } from "@/lib/utils";
@@ -116,7 +116,7 @@ function ContactPage() {
         </Container>
       </section>
 
-      <CtaBand />
+      {/* <CtaBand /> */}
     </>
   );
 }
