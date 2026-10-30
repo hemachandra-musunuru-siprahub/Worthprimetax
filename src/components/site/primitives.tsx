@@ -3,9 +3,10 @@ import { cn } from "@/lib/utils";
 
 /**
  * Fires when the element scrolls into view. With `once` (the default) it stays true from then on;
- * otherwise it turns false again whenever the element leaves the view.
+ * otherwise it turns false again whenever the element leaves the view. `rootMargin` shrinks or
+ * grows the view the element is measured against, as in IntersectionObserver.
  */
-export function useInView<T extends HTMLElement>(threshold = 0.2, once = true) {
+export function useInView<T extends HTMLElement>(threshold = 0.2, once = true, rootMargin = "0px") {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -26,11 +27,11 @@ export function useInView<T extends HTMLElement>(threshold = 0.2, once = true) {
           setInView(visible);
         }
       },
-      { threshold },
+      { threshold, rootMargin },
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [threshold, once]);
+  }, [threshold, once, rootMargin]);
 
   return { ref, inView };
 }

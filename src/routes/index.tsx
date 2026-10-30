@@ -1,6 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { seoHead } from "@/lib/seo";
-import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent,
+  type ReactNode,
+} from "react";
 import {
   ArrowRight,
   CalendarDays,
@@ -413,7 +420,14 @@ function ProofSection() {
   const total = REASONS.length;
   // On narrow screens the cards become a swipeable track; on desktop tapping a card highlights it.
   const { active, setActive, trackRef, itemRefs: cardRefs } = useSnapCarousel(total);
-  const { ref: cardsRef, inView: cardsInView } = useInView<HTMLDivElement>(0.2);
+  // Not `once`: the cards fan out as they come into view, gather back into a deck while still on
+  // screen as scrolling down carries them into the top quarter, and fan out again on the way back
+  // up. The top margin keeps that quarter out of the measured view so the closing can be seen.
+  const { ref: cardsRef, inView: cardsInView } = useInView<HTMLDivElement>(
+    0.5,
+    false,
+    "-25% 0px 0px 0px",
+  );
 
   return (
     <section
@@ -482,8 +496,14 @@ function ProofSection() {
           >
             {REASONS.map((r, i) => {
               const isActive = active === i;
-              // The first half of the cards comes in from the left, the rest from the right.
-              const fromLeft = i < total / 2;
+              // The cards start as a deck in the middle of their row, last card on top and the
+              // ones behind peeking out to its left, then fan out into their own columns.
+              const lgDepth = total - 1 - i;
+              const smDepth = 1 - (i % 2);
+              const deck = {
+                "--deck-lg": `calc(${(total - 1) / 2 - i} * (100% + 1.25rem) - ${lgDepth * 0.875}rem)`,
+                "--deck-sm": `calc(${0.5 - (i % 2)} * (100% + 1.25rem) - ${smDepth * 0.875}rem)`,
+              } as CSSProperties;
               return (
                 <article
                   key={r.title}
@@ -494,18 +514,12 @@ function ProofSection() {
                   aria-label={`${i + 1} of ${total}`}
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => setActive(i)}
-                  // The outer cards set off first, the inner pair just after.
-                  style={{ transitionDelay: `${i === 0 || i === total - 1 ? 0 : 160}ms` }}
+                  style={{ ...deck, zIndex: i }}
                   className={cn(
                     "flex w-[85%] shrink-0 snap-start perspective-[900px] transition-all duration-1000 ease-out motion-reduce:transition-none sm:w-auto",
                     cardsInView
-                      ? "translate-x-0 translate-y-0 rotate-y-0 opacity-100"
-                      : cn(
-                          "translate-y-6 opacity-0 sm:translate-y-0",
-                          fromLeft
-                            ? "sm:-translate-x-[45vw] sm:rotate-y-[40deg]"
-                            : "sm:translate-x-[45vw] sm:-rotate-y-[40deg]",
-                        ),
+                      ? "translate-x-0 translate-y-0 opacity-100"
+                      : "translate-y-6 opacity-0 sm:translate-x-(--deck-sm) sm:translate-y-0 sm:opacity-100 lg:translate-x-(--deck-lg)",
                   )}
                 >
                   <div
