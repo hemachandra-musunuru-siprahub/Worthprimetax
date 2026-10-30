@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { Service } from "@/data/services";
 import { getServiceFaqs } from "@/data/serviceFaqs";
-import { cn } from "@/lib/utils";
 import { Container, Reveal } from "./primitives";
 import { BackdropHero } from "./BackdropHero";
 import { PricingMarquee } from "./PricingMarquee";
@@ -59,10 +58,24 @@ export function ServiceDetailFeature({
           <div className="mt-8">
             <CapabilityList items={service.capabilities} />
           </div>
+          {/* Call to action: a small button centred under the list, before the FAQs. */}
+          <div className="mt-6 flex justify-center">
+            <Link
+              to="/contact"
+              hash="contact-form"
+              className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+            >
+              {service.cta}
+              <ArrowRight
+                className="size-4 shrink-0 transition-transform group-hover:translate-x-0.5"
+                aria-hidden
+              />
+            </Link>
+          </div>
         </Container>
       </section>
 
-      {/* FAQs: client-supplied questions, above the closing call to action */}
+      {/* FAQs: client-supplied questions */}
       {faqs.length > 0 && (
         <section id="faqs" aria-labelledby="faqs-heading" className="scroll-mt-20 pb-12 sm:pb-16">
           <Container className={WIDE}>
@@ -76,22 +89,6 @@ export function ServiceDetailFeature({
           </Container>
         </section>
       )}
-
-      <section className="bg-tint py-10 sm:py-12">
-        <Container className={cn(WIDE, "text-center")}>
-          <Link
-            to="/contact"
-            hash="contact-form"
-            className="group inline-flex items-center gap-3 font-serif text-[clamp(1.35rem,2.6vw,2rem)] leading-snug font-bold text-primary hover:underline"
-          >
-            {service.cta}
-            <ArrowRight
-              className="size-7 shrink-0 transition-transform group-hover:translate-x-1"
-              aria-hidden
-            />
-          </Link>
-        </Container>
-      </section>
     </>
   );
 }

@@ -234,6 +234,12 @@ export function formatInsightDate(iso: string) {
   });
 }
 
+export const ABOUT_STORY = {
+  label: "How We Started?",
+  heading: "Built on Experience. Shaped by Perspective.",
+  body: "Behind every enduring enterprise lies a confluence of sound structure, considered decisions and discerning professional counsel. WorthPrime Tax was shaped by precisely that philosophy—bringing together the complementary expertise of its co-founders, with extensive experience across accounting, taxation, audit, payroll, legal and compliance services spanning the U.S., UAE and India.",
+};
+
 export const FOUNDERS = [
   {
     name: "Abuzer Ahmed Siddiqui",

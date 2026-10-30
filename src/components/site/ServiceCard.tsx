@@ -96,14 +96,16 @@ export function ServiceCard({
 
         {/* Back */}
         <div className="flip-back surface-card flex h-full w-full flex-col justify-between gap-2 border-hero bg-hero p-6 text-hero-foreground max-sm:rounded-2xl max-sm:p-3 lg:p-3 xl:p-4">
-          {/* The full list is shown; longer lists scroll inside the card so "View Service" stays put. */}
-          <div className="min-h-0 overflow-y-auto overscroll-contain pr-1 [scrollbar-color:var(--color-hero-muted)_transparent] [scrollbar-width:thin]">
-            <p className="mb-2 text-xs font-semibold text-hero-foreground max-sm:mb-1 max-sm:text-[0.65rem] lg:text-[11px]">
+          {/* No scrolling: the list shows the items that fit whole. The rest wrap into a second
+              column that is clipped out of view, so no item is cut off mid-line; "View Service"
+              has the full list. */}
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+            <p className="mb-2 shrink-0 text-xs font-semibold text-hero-foreground max-sm:mb-1 max-sm:text-[0.65rem] lg:text-[11px]">
               {service.capabilitiesLabel}:
             </p>
-            <ul className="space-y-1.5 text-xs text-hero-muted max-sm:space-y-1 max-sm:text-[0.65rem] max-sm:leading-snug lg:space-y-1 lg:text-[11px] lg:leading-snug">
+            <ul className="flex min-h-0 flex-1 flex-col flex-wrap content-start gap-x-4 gap-y-1.5 overflow-hidden text-xs text-hero-muted max-sm:gap-y-1 max-sm:text-[0.65rem] max-sm:leading-snug lg:gap-y-1 lg:text-[11px] lg:leading-snug">
               {service.capabilities.slice(0, service.cardCapabilityCount).map((c) => (
-                <li key={c} className="flex gap-2">
+                <li key={c} className="flex w-full gap-2">
                   <span className="text-hero-foreground">—</span>
                   <span>{c}</span>
                 </li>
