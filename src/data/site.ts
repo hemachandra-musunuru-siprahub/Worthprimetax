@@ -3,6 +3,7 @@ export const LINKS = {
   login: "https://worthprimetax.com/Login.aspx",
   irs: "https://sa.www4.irs.gov/irfof/lang/en/irfofgetstatus.jsp",
   linkedin: "https://www.linkedin.com/company/worthprime-tax-legal-and-compliance-services-inc/",
+  instagram: "https://www.instagram.com/worthprimetax/",
   phone: "+1 (646) 798-3907",
   phoneHref: "tel:+16467983907",
   email: "helpdesk@worthprimetax.com",

@@ -32,10 +32,10 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   "irs-audit-notice-resolution": FileSearch,
 };
 
-// Only LinkedIn has a URL slot; the others show as placeholders until the client supplies profiles.
+// YouTube shows as a placeholder until the client supplies its profile.
 const SOCIALS: { label: string; Icon: LucideIcon; href?: string }[] = [
   { label: "LinkedIn", Icon: Linkedin, href: HAS_LINKEDIN ? LINKS.linkedin : undefined },
-  { label: "Instagram", Icon: Instagram },
+  { label: "Instagram", Icon: Instagram, href: LINKS.instagram },
   { label: "YouTube", Icon: Youtube },
 ];
 

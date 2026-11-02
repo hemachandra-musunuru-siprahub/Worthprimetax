@@ -19,12 +19,15 @@ function PricingPage() {
     <>
       <section aria-labelledby="price-table" className="relative z-10 pt-8 pb-4 sm:pt-10 lg:pt-6">
         <Container className={WIDE}>
-          {/* With no hero, this hidden heading is the page's h1. */}
-          <h1 id="price-table" className="sr-only">
-            Starting prices by service
+          {/* With no hero, this heading is the page's h1. */}
+          <h1
+            id="price-table"
+            className="font-serif text-[clamp(1.7rem,3vw,2.4rem)] leading-[1.15] font-bold text-primary"
+          >
+            Price Chart
           </h1>
           {/* The outer frame only wraps the desktop table; below lg the cards sit on the page. */}
-          <div className="rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 max-lg:border-0 max-lg:bg-transparent max-lg:p-0 max-lg:shadow-none lg:p-3">
+          <div className="mt-5 rounded-2xl border border-border bg-card p-2 shadow-[0_24px_60px_-36px] shadow-primary/40 max-lg:border-0 max-lg:bg-transparent max-lg:p-0 max-lg:shadow-none lg:p-3">
             <PricingTable showIncluded={false} compact />
           </div>
         </Container>
