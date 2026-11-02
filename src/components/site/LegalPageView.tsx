@@ -35,7 +35,11 @@ export function LegalPageView({
           <h1 className="mt-5 font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.05] font-bold tracking-[-0.02em] text-primary">
             {page.heading}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-foreground/80">{page.intro}</p>
+          {page.intro && (
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-foreground/80">
+              {page.intro}
+            </p>
+          )}
           <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted-foreground">
             <CalendarDays className="size-4" aria-hidden />
             Last updated: {page.updated}

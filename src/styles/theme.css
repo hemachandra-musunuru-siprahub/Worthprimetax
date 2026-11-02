@@ -24,6 +24,12 @@
   --brand-ink: oklch(0.18 0.01 260); /* near-black body copy */
   --brand-slate: oklch(0.42 0.012 260); /* muted copy */
   --brand-whatsapp: #25d366;
+  /* Floating contact buttons: phone handset blue and the email "M" gradient */
+  --brand-call: #1a73e8;
+  --brand-mail-red: #ea4335;
+  --brand-mail-orange: #f9a825;
+  --brand-mail-green: #34a853;
+  --brand-mail-blue: #4285f4;
   --brand-red: oklch(0.62 0.2 27);
   --brand-red-foreground: oklch(0.98 0.01 85);
 
@@ -38,6 +44,9 @@
   --theme-indigo-foreground: var(--brand-white);
   --theme-gold: var(--brand-navy); /* client asked for the primary blue in place of gold site-wide */
   --theme-rating: var(--brand-star);
+  /* Warm accent on insight article pages (tags, underlines, highlight box). Point it at
+     --brand-navy to drop the amber. */
+  --theme-highlight: var(--brand-star);
 
   /* Page and surfaces */
   --theme-page-bg: var(--brand-white);
@@ -93,6 +102,11 @@
   --theme-danger: var(--brand-red);
   --theme-danger-foreground: var(--brand-red-foreground);
   --theme-whatsapp: var(--brand-whatsapp);
+  --theme-call: var(--brand-call);
+  --theme-mail-red: var(--brand-mail-red);
+  --theme-mail-orange: var(--brand-mail-orange);
+  --theme-mail-green: var(--brand-mail-green);
+  --theme-mail-blue: var(--brand-mail-blue);
 
   /* App sidebar (shadcn component; not used on the marketing pages yet) */
   --theme-sidebar-bg: var(--theme-surface);

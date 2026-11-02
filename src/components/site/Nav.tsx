@@ -89,7 +89,7 @@ export function Nav() {
               />
               <span
                 className={cn(
-                  "mt-[3px] text-[0.4375rem] leading-none font-medium whitespace-nowrap",
+                  "mt-[3px] text-[0.4375rem] leading-none font-bold whitespace-nowrap",
                   overlay ? "text-hero-foreground" : "text-primary",
                 )}
               >
@@ -240,7 +240,7 @@ export function Nav() {
               height={383}
               className="h-11 w-auto object-contain"
             />
-            <span className="mt-1 text-[0.4375rem] leading-none font-medium whitespace-nowrap text-primary">
+            <span className="mt-1 text-[0.4375rem] leading-none font-bold whitespace-nowrap text-primary">
               Your Compliance Partner!
             </span>
           </Link>

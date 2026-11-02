@@ -1,11 +1,13 @@
+import type { Insight } from "@/data/site";
 import documentsImage from "@/assets/worthprime-documents-blue.webp";
 import advisersImage from "@/assets/worthprime-advisers-blue.webp";
 import pricingDeskImage from "@/assets/pricing-desk.jpg";
 
-type Image = { src: string; alt: string; width: number; height: number };
+/** LinkedIn images have no known size, so width/height are only set for our own photos. */
+type Image = { src: string; alt: string; width?: number; height?: number };
 
 /** Cover photo for each article, keyed by insight slug. */
-export const INSIGHT_IMAGES: Record<string, Image> = {
+const INSIGHT_IMAGES: Record<string, Image> = {
   "key-us-tax-changes-2026": {
     src: documentsImage,
     alt: "Tax documents, a calculator and a pen on a desk",
@@ -25,3 +27,11 @@ export const INSIGHT_IMAGES: Record<string, Image> = {
     height: 436,
   },
 };
+
+/**
+ * Cover image for an article: its LinkedIn image, or the photo of a hand-written fallback article.
+ * Null when there is none; InsightImage then draws a branded cover instead of a stock photo.
+ */
+export function insightImage(insight: Insight): Image | null {
+  return insight.images?.[0] ?? INSIGHT_IMAGES[insight.slug] ?? null;
+}

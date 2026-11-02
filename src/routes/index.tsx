@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { getInsights } from "@/lib/linkedin-insights";
 import { seoHead } from "@/lib/seo";
 import {
   useEffect,
@@ -32,7 +33,6 @@ import {
   FAQS,
   // FOUNDERS,
   HOME_PRICING,
-  INSIGHTS,
   REASONS,
   STATS,
 } from "@/data/site";
@@ -70,6 +70,7 @@ const DESCRIPTION =
 
 export const Route = createFileRoute("/")({
   head: () => seoHead({ title: TITLE, description: DESCRIPTION, path: "/" }),
+  loader: () => getInsights(),
   component: Index,
 });
 
@@ -88,8 +89,8 @@ function Index() {
       <StatsBand />
       {/* <WhoWeAre /> */}
       <ServicesGrid />
-      <ProofSection />
       <PricingPreview />
+      <ProofSection />
       <ClientExperience />
       <Insights />
       <Faq />
@@ -111,6 +112,17 @@ function Hero() {
     setPhotoHeight(introOpen ? null : (heroRef.current?.offsetHeight ?? null));
     setIntroOpen(!introOpen);
   };
+  const introToggle = (
+    <button
+      type="button"
+      aria-expanded={introOpen}
+      aria-controls="hero-intro-more"
+      onClick={toggleIntro}
+      className="font-semibold whitespace-nowrap text-primary underline underline-offset-2 hover:no-underline"
+    >
+      {introOpen ? "Read less" : "Read more"}
+    </button>
+  );
   return (
     <section
       ref={heroRef}
@@ -187,24 +199,18 @@ function Hero() {
               Tax obligations rarely exist in isolation. Entity structure affects taxation.
               Accounting shapes financial visibility. Payroll carries its own compliance
               responsibilities. And an IRS notice can quickly become a business concern.
-              {introOpen && (
-                <span id="hero-intro-more">
-                  {" "}
+              {/* Opened, the rest starts on its own line after a small gap (half a line), and "Read less"
+                  follows it. */}
+              {introOpen ? (
+                <span id="hero-intro-more" className="mt-[0.5lh] block">
                   WorthPrime Tax brings these disciplines together through a considered approach to
                   U.S. tax, accounting and compliance—helping U.S. individuals, entrepreneurs and
                   businesses manage their financial responsibilities with greater clarity and
-                  precision.
+                  precision. {introToggle}
                 </span>
-              )}{" "}
-              <button
-                type="button"
-                aria-expanded={introOpen}
-                aria-controls="hero-intro-more"
-                onClick={toggleIntro}
-                className="font-semibold whitespace-nowrap text-primary underline underline-offset-2 hover:no-underline"
-              >
-                {introOpen ? "Read less" : "Read more"}
-              </button>
+              ) : (
+                <> {introToggle}</>
+              )}
             </p>
             <p className="mt-3 font-semibold text-primary max-sm:mt-2 max-sm:text-[0.8125rem]">
               Get Expert Tax Counsel, Optimized Tax Outcomes, All Handled With Perspective
@@ -526,17 +532,19 @@ function ProofSection() {
                     onPointerMove={tiltCard}
                     onPointerLeave={resetTilt}
                     className={cn(
-                      "group relative flex w-full flex-col rounded-xl border bg-linear-to-b p-6 transform-3d transition-[transform,box-shadow,border-color] duration-300 ease-out sm:p-7",
+                      // Every card is a navy panel with white text; the selected one gets a brighter
+                      // blue edge and a deeper shadow.
+                      "group relative flex w-full flex-col rounded-xl border bg-linear-to-b from-hero to-hero p-6 text-hero-foreground transform-3d transition-[transform,box-shadow,border-color] duration-300 ease-out sm:p-7",
                       isActive
-                        ? "border-brand-secondary/40 from-tint to-card shadow-[0_18px_40px_-22px] shadow-brand-secondary/50"
-                        : "border-brand-secondary/20 from-card to-card shadow-[0_10px_30px_-24px] shadow-primary/40 hover:border-brand-secondary/30 hover:shadow-[0_26px_50px_-24px]",
+                        ? "border-brand-secondary shadow-[0_22px_44px_-20px] shadow-primary/70"
+                        : "border-hero shadow-[0_10px_30px_-22px] shadow-primary/50 hover:border-brand-secondary/60 hover:shadow-[0_26px_50px_-24px]",
                     )}
                   >
                     {/* Lifted off the card face so the text floats above it as the card tilts. */}
-                    <h3 className="font-serif text-xl leading-snug font-bold text-primary translate-z-6 sm:text-[1.3rem] lg:min-h-[4.125em]">
+                    <h3 className="font-serif text-lg leading-snug font-bold text-hero-foreground translate-z-6 sm:text-[1.125rem]">
                       {r.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground translate-z-3 sm:text-[0.9375rem]">
+                    <p className="mt-2 text-[0.8125rem] leading-relaxed text-hero-foreground/85 translate-z-3 sm:text-sm">
                       {r.body}
                     </p>
                   </div>
@@ -594,7 +602,10 @@ function ServicesGrid() {
           />
         </Reveal>
       </div>
-      <div className={cn("mt-10", SERVICE_GRID)}>
+      <h3 className="mt-10 text-[clamp(1.5rem,2.6vw,2.1rem)] leading-tight text-primary">
+        Our Services
+      </h3>
+      <div className={cn("mt-6", SERVICE_GRID)}>
         {SERVICES.map((s, i) => (
           <Reveal key={s.slug} delay={(i % 5) * 80}>
             <ServiceCard service={s} />
@@ -737,8 +748,12 @@ function PricingPreview() {
           <span className="block text-primary">{HOME_PRICING.heading}</span>
           <span className="block font-semibold text-brand-gold">{HOME_PRICING.headingMuted}</span>
         </h2>
-        <p className="mt-5 max-w-[37rem] text-base leading-relaxed text-muted-foreground sm:text-lg">
-          {HOME_PRICING.intro}
+        <p className="mt-5 max-w-[44rem] text-sm leading-relaxed text-muted-foreground sm:text-[0.9375rem]">
+          {HOME_PRICING.intro.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
         </p>
 
         <div className="mt-7 flex flex-wrap items-center justify-between gap-5">
@@ -1165,21 +1180,32 @@ function VideoTestimonial() {
 }
 
 function Insights() {
+  const insights = Route.useLoaderData().slice(0, 3);
   return (
     <Section id="insights">
-      <h2 className="text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
-        Latest From <span className="text-primary">WorthPrime Tax</span>
-      </h2>
-      <Link
-        to="/insights"
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-hero px-6 py-3 text-sm font-semibold text-hero-foreground transition-transform hover:scale-[1.03]"
-      >
-        See All Insights <ArrowRight className="size-4" />
-      </Link>
+      {/* Heading and button share one line; the button wraps under it on narrow phones. */}
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
+        <h2 className="text-[clamp(2rem,4.4vw,3.4rem)] leading-[1.05]">
+          Latest From <span className="text-primary">WorthPrime Tax</span>
+        </h2>
+        <Link
+          to="/insights"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-hero px-6 py-3 text-sm font-semibold text-hero-foreground transition-transform hover:scale-[1.03]"
+        >
+          See All Insights <ArrowRight className="size-4" />
+        </Link>
+      </div>
       <div className="mt-10 grid gap-5 sm:grid-cols-3">
-        {INSIGHTS.map((a, i) => (
-          <Reveal key={i} delay={i * 80}>
-            <InsightCard insight={a} index={i} />
+        {insights.map((a, i) => (
+          <Reveal key={a.slug} delay={i * 80} className="h-full">
+            {/* Each card opens its own article page. */}
+            <Link
+              to="/insights/$slug"
+              params={{ slug: a.slug }}
+              className="block h-full rounded-[var(--radius-lg)] transition-transform hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              <InsightCard insight={a} />
+            </Link>
           </Reveal>
         ))}
       </div>

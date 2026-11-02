@@ -1,24 +1,10 @@
-import { INSIGHTS } from "@/data/site";
-import advisersImage from "@/assets/worthprime-advisers-blue.webp";
-import documentsImage from "@/assets/worthprime-documents-blue.webp";
+import type { Insight } from "@/data/site";
+import { InsightImage } from "@/components/site/InsightImage";
 
-export function InsightCard({
-  insight,
-  index,
-}: {
-  insight: (typeof INSIGHTS)[number];
-  index: number;
-}) {
+export function InsightCard({ insight }: { insight: Insight }) {
   return (
     <article className="surface-card h-full overflow-hidden">
-      <img
-        src={index % 2 === 1 ? advisersImage : documentsImage}
-        alt="Tax planning and advisory"
-        width={1408}
-        height={1008}
-        loading="lazy"
-        className="aspect-video w-full object-cover"
-      />
+      <InsightImage insight={insight} lazy className="aspect-video w-full object-cover" />
       <div className="p-6">
         <p className="label-slash">{insight.tag}</p>
         <h3 className="mt-3 text-lg leading-snug">{insight.title}</h3>

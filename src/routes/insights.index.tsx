@@ -5,7 +5,6 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import {
   formatInsightDate,
   HAS_LINKEDIN,
-  INSIGHTS,
   INSIGHTS_PAGE,
   insightReadMinutes,
   type Insight,
@@ -13,8 +12,9 @@ import {
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/primitives";
 import { InsightTag } from "@/components/site/ArticleCard";
-import { INSIGHT_IMAGES } from "@/components/site/insightImages";
+import { InsightImage } from "@/components/site/InsightImage";
 import { LinkedInBand } from "@/components/site/LinkedInBand";
+import { getInsights } from "@/lib/linkedin-insights";
 // import { CtaBand } from "@/components/site/CtaBand";
 
 export const Route = createFileRoute("/insights/")({
@@ -24,23 +24,29 @@ export const Route = createFileRoute("/insights/")({
       description: INSIGHTS_PAGE.description,
       path: "/insights",
     }),
+  loader: () => getInsights(),
   component: InsightsPage,
 });
 
 /** How long each article stays in the featured card before the next one fades in. */
 const ROTATE_MS = 2000;
 
+/** How many of the newest articles share the featured card and the Latest Articles list. */
+const LATEST_COUNT = 3;
+
 function InsightsPage() {
-  // The featured card cycles through every article; the Latest Articles row it shows is highlighted.
+  const insights = Route.useLoaderData();
+  // The featured card and Latest Articles show the newest few; Explore by Topic lists them all.
+  const latest = insights.slice(0, LATEST_COUNT);
   const [featured, setFeatured] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (paused || INSIGHTS.length < 2) return;
+    if (paused || latest.length < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setFeatured((i) => (i + 1) % INSIGHTS.length), ROTATE_MS);
+    const id = window.setInterval(() => setFeatured((i) => (i + 1) % latest.length), ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [paused]);
+  }, [paused, latest.length]);
 
   return (
     <>
@@ -52,19 +58,19 @@ function InsightsPage() {
 
           <div className="mt-6 grid gap-6 sm:mt-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-8">
             <FeaturedRotator
-              insights={INSIGHTS}
+              insights={latest}
               active={featured}
               onSelect={setFeatured}
               onPause={setPaused}
             />
-            <LatestArticles insights={INSIGHTS} activeSlug={INSIGHTS[featured]?.slug} />
+            <LatestArticles insights={latest} activeSlug={latest[featured]?.slug} />
           </div>
         </Container>
       </section>
 
       <section aria-labelledby="explore-by-topic" className="pb-8 sm:pb-10">
         <Container>
-          <TopicCarousel insights={INSIGHTS} />
+          <TopicCarousel insights={insights} />
 
           {HAS_LINKEDIN && (
             <div className="mt-6">
@@ -139,7 +145,6 @@ function FeaturedRotator({
 
 /** One article in the featured card: photo, with its copy over a navy fade at the bottom. */
 function FeaturedArticle({ insight, visible }: { insight: Insight; visible: boolean }) {
-  const image = INSIGHT_IMAGES[insight.slug];
   return (
     <Link
       to="/insights/$slug"
@@ -151,15 +156,12 @@ function FeaturedArticle({ insight, visible }: { insight: Insight; visible: bool
         visible ? "opacity-100" : "pointer-events-none opacity-0",
       )}
     >
-      {image && (
-        <img
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          className="absolute inset-0 -z-10 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      )}
+      {/* Posts without a picture get the logo-wall photo here too; the navy fade keeps the copy legible. */}
+      <InsightImage
+        insight={insight}
+        alt=""
+        className="absolute inset-0 -z-10 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      />
       <div
         className="absolute inset-0 -z-10 bg-linear-to-t from-hero/95 via-hero/45 via-45% to-transparent"
         aria-hidden
@@ -214,7 +216,6 @@ function LatestArticles({ insights, activeSlug }: { insights: Insight[]; activeS
 
       <ul className="mt-3 divide-y divide-border">
         {insights.map((insight) => {
-          const image = INSIGHT_IMAGES[insight.slug];
           return (
             <li key={insight.slug}>
               <Link
@@ -225,16 +226,12 @@ function LatestArticles({ insights, activeSlug }: { insights: Insight[]; activeS
                   insight.slug === activeSlug && "bg-tint",
                 )}
               >
-                {image && (
-                  <img
-                    src={image.src}
-                    alt=""
-                    width={image.width}
-                    height={image.height}
-                    loading="lazy"
-                    className="aspect-[3/2] w-24 shrink-0 rounded-md object-cover sm:w-28"
-                  />
-                )}
+                <InsightImage
+                  insight={insight}
+                  alt=""
+                  lazy
+                  className="aspect-[3/2] w-24 shrink-0 rounded-md object-cover sm:w-28"
+                />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                     <InsightTag tag={insight.tag} className="px-2 py-0.5 text-[0.5625rem]" />
@@ -267,7 +264,7 @@ function LatestArticles({ insights, activeSlug }: { insights: Insight[]; activeS
   );
 }
 
-/** "Explore by Topic": a row of horizontal article cards, swiped sideways on narrow screens. */
+/** "Explore by Topic": every article as a horizontal card, in a grid of up to three columns. */
 function TopicCarousel({ insights }: { insights: Insight[] }) {
   return (
     <>
@@ -278,26 +275,23 @@ function TopicCarousel({ insights }: { insights: Insight[] }) {
         {INSIGHTS_PAGE.topicsHeading}
       </h2>
 
-      <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {insights.map((insight) => {
-          const image = INSIGHT_IMAGES[insight.slug];
           return (
             <article
               key={insight.slug}
-              // `relative` keeps the card's sr-only text inside the scroller; without it that
-              // absolutely positioned text escaped to the page and widened it on phones.
-              className="group relative flex shrink-0 basis-[88%] snap-start gap-4 rounded-xl border border-border bg-card p-3 sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]"
+              // `relative` keeps the card's sr-only text inside the card; without it that absolutely
+              // positioned text escaped to the page and widened it on phones.
+              className="group relative flex min-h-40 gap-4 rounded-xl border border-border bg-card p-3"
             >
-              {image && (
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  loading="lazy"
-                  className="w-[34%] shrink-0 self-stretch rounded-md object-cover"
+              {/* The text sets the card height; the image fills it whatever its own shape. */}
+              <div className="relative w-[34%] shrink-0 overflow-hidden rounded-md">
+                <InsightImage
+                  insight={insight}
+                  lazy
+                  className="absolute inset-0 size-full object-cover"
                 />
-              )}
+              </div>
               <div className="flex min-w-0 flex-1 flex-col py-1 pr-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <InsightTag tag={insight.tag} className="px-2 py-0.5 text-[0.5625rem]" />

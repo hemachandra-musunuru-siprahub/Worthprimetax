@@ -3,7 +3,6 @@ import { seoHead } from "@/lib/seo";
 import { useState, type ReactNode } from "react";
 import {
   ArrowRight,
-  BadgeCheck,
   ChartColumn,
   ChevronLeft,
   ChevronRight,
@@ -58,14 +57,6 @@ const PILLARS = [
     title: "Our Partnership",
     text: "Helping individuals and businesses navigate financial decisions with confidence.",
   },
-];
-
-// Mark is either an icon or a short monogram, drawn in a soft circle like the mockup.
-const CREDENTIALS: { label: string; text: string; icon?: LucideIcon; monogram?: string }[] = [
-  { label: "CPA", text: "Certified Public Accountant", icon: Users },
-  { label: "Enrolled Agent", text: "IRS Enrolled Agent", monogram: "EA" },
-  { label: "AICPA", text: "American Institute of CPAs", icon: BadgeCheck },
-  { label: "IRS", text: "Authorized E-File Provider", icon: ShieldCheck },
 ];
 
 // Landmark drawing per office, in OFFICES order.
@@ -663,38 +654,6 @@ function AboutPage() {
       </Section>
 
       <Founders />
-
-      <Section>
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <div>
-            <SectionLabel>Professional Standards</SectionLabel>
-            <h2 className={cn("mt-4 text-[clamp(1.9rem,3.4vw,2.8rem)]", HEADING)}>
-              Expertise You Can Rely On.
-            </h2>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Our team holds recognised professional credentials and maintains compliance with the
-            highest industry standards.
-          </p>
-        </div>
-        <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border">
-          {CREDENTIALS.map(({ label, text, icon: Icon, monogram }) => (
-            <li key={label} className="flex items-center gap-4 lg:px-6 lg:first:pl-0">
-              <span className="grid size-16 shrink-0 place-items-center rounded-full bg-muted text-primary">
-                {Icon ? (
-                  <Icon className="size-7" strokeWidth={1.4} aria-hidden />
-                ) : (
-                  <span className="font-serif text-2xl font-bold">{monogram}</span>
-                )}
-              </span>
-              <span>
-                <span className="block text-sm font-semibold text-primary">{label}</span>
-                <span className="text-xs text-muted-foreground">{text}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </Section>
 
       <Section className="bg-muted/40">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.5fr_0.95fr] lg:items-center lg:gap-6">
