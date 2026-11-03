@@ -3,6 +3,7 @@ import { seoHead } from "@/lib/seo";
 import { PRICING_PAGE } from "@/data/site";
 import { Container } from "@/components/site/primitives";
 import { PricingTable } from "@/components/site/PricingTable";
+import { cn } from "@/lib/utils";
 // import { CtaBand } from "@/components/site/CtaBand";
 
 // Wider than the standard 1200px container so the ten-row table has room, as in the approved layout.
@@ -18,7 +19,9 @@ function PricingPage() {
   return (
     <>
       <section aria-labelledby="price-table" className="relative z-10 pt-8 pb-4 sm:pt-10 lg:pt-6">
-        <Container className={WIDE}>
+        {/* On large screens the table is narrowed and centred so the prices sit close to the
+            service names instead of across a wide gap. */}
+        <Container className={cn(WIDE, "lg:max-w-4xl")}>
           {/* With no hero, this heading is the page's h1. */}
           <h1
             id="price-table"
