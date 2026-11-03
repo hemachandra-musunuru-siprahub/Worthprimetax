@@ -360,19 +360,15 @@ function WhatComesNext() {
               Your financial obligations change as your circumstances change.
             </p>
             <p>
-              A new business requires the right structure. A growing company needs{" "}
-              <strong className="text-foreground">reliable books</strong> and{" "}
-              <strong className="text-foreground">payroll</strong>. Tax season calls for accurate
-              filings. International activity can create additional reporting requirements. And when
-              the IRS raises a question, the response needs to be deliberate.
+              A new business requires the right structure. A growing company needs reliable books
+              and payroll. Tax season calls for accurate filings. International activity can create
+              additional reporting requirements. And when the IRS raises a question, the response
+              needs to be deliberate.
             </p>
             <p>
-              <strong className="text-foreground">WorthPrime Tax in U.S.</strong> provides the
-              professional perspective to manage these moments with greater clarity—from formation
-              and <strong className="text-foreground">bookkeeping</strong> to{" "}
-              <strong className="text-foreground">U.S. tax</strong>, payroll,{" "}
-              <strong className="text-foreground">audit</strong> and{" "}
-              <strong className="text-foreground">IRS compliance</strong>.
+              WorthPrime Tax in U.S. provides the professional perspective to manage these moments
+              with greater clarity—from formation and bookkeeping to U.S. tax, payroll, audit and
+              IRS compliance.
             </p>
           </Reveal>
         </div>
