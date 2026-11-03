@@ -48,8 +48,9 @@ const button =
   "grid size-13 place-items-center rounded-full border shadow-lg shadow-hero/30 transition duration-200 sm:size-14 motion-reduce:transition-none";
 const interactive =
   "hover:-translate-y-0.5 hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:hover:translate-y-0";
-const whatsapp = "border-whatsapp bg-whatsapp text-card";
-// White circles: the phone glyph takes the call blue, the email "M" carries its own gradient.
+// White circles: the WhatsApp glyph takes its green, the phone glyph the call blue, and the
+// email "M" carries its own gradient.
+const whatsapp = "border-border bg-background text-whatsapp";
 const call = "border-border bg-background text-call";
 const mail = "border-border bg-background";
 
