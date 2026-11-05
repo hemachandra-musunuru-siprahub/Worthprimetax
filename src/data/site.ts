@@ -567,7 +567,6 @@ export type LegalPage = {
   heading: string;
   /** Optional lead paragraph under the heading. */
   intro?: string;
-  updated: string;
   sections: LegalSection[];
   /** Heading of the contact card at the end of the page. */
   contactHeading: string;
@@ -585,7 +584,6 @@ export const PRIVACY_PAGE: LegalPage = {
   heading: "Privacy Policy",
   intro:
     "Client Information Confidentiality, Non-Disclosure and Permitted Use Policy (In accordance with IRC Section 7216, where applicable).",
-  updated: "[date TBC]",
   contactHeading: "Questions About Your Privacy?",
   sections: [
     // Client-supplied wording.
@@ -660,7 +658,6 @@ export const TERMS_PAGE: LegalPage = {
   description:
     "How WorthPrime Tax treats the documents and information clients share, under its NDAs and service agreements.",
   heading: "Terms of Use",
-  updated: "[date TBC]",
   contactHeading: "Questions About These Terms?",
   sections: [
     // Client-supplied wording.

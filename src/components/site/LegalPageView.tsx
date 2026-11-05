@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, CalendarDays, Check, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { LINKS, OFFICES, type LegalPage } from "@/data/site";
 import { Container } from "./primitives";
 import { PricingMarquee } from "./PricingMarquee";
@@ -40,10 +40,6 @@ export function LegalPageView({
               {page.intro}
             </p>
           )}
-          <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted-foreground">
-            <CalendarDays className="size-4" aria-hidden />
-            Last updated: {page.updated}
-          </p>
         </Container>
       </section>
 
