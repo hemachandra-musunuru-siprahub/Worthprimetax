@@ -13,6 +13,13 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    build: {
+      rolldownOptions: {
+        // Provided by the Workers runtime; worker-mailer imports it only when running there.
+        // Left external so non-Cloudflare builds (Netlify/Node) don't fail trying to resolve it.
+        external: ["cloudflare:sockets"],
+      },
+    },
     server: {
       // Lovable-hosted assets (e.g. the logo) live under /__l5e on the deployed site;
       // proxy them in local dev so they render outside Lovable.

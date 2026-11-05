@@ -363,7 +363,8 @@ export const CLIENT_EXPERIENCE = {
   video: {
     title: "One-Minute Video Testimonial",
     body: "Hear directly from one of our clients about their experience working with WorthPrime Tax.",
-    src: null as string | null, // [video file or URL, client to supply]
+    // Served from public/video; the file name's spaces are URL-encoded.
+    src: "/video/What%20Clients%20Say..mp4" as string | null,
     pendingNote: "[Video, client to supply]",
   },
 };
@@ -678,4 +679,10 @@ export const TERMS_PAGE: LegalPage = {
       ],
     },
   ],
+};
+
+/** Company video on the About page, served from public/video (spaces URL-encoded). */
+export const COMPANY_VIDEO = {
+  title: "WorthPrime Company Video",
+  src: "/video/WorthPrime%203.mp4",
 };
