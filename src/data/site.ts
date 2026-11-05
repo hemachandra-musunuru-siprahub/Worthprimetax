@@ -363,8 +363,11 @@ export const CLIENT_EXPERIENCE = {
   video: {
     title: "One-Minute Video Testimonial",
     body: "Hear directly from one of our clients about their experience working with WorthPrime Tax.",
-    // Served from public/video; the file name's spaces are URL-encoded.
-    src: "/video/What%20Clients%20Say..mp4" as string | null,
+    // Played in this order; served from public/video with spaces URL-encoded. Empty shows pendingNote.
+    sources: [
+      "/video/What%20Clients%20Say%20us.mp4",
+      "/video/What%20Clients%20Say..mp4",
+    ] as string[],
     pendingNote: "[Video, client to supply]",
   },
 };

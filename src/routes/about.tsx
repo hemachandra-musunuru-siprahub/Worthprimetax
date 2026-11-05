@@ -14,7 +14,7 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { ABOUT_STORY, COMPANY_VIDEO, FOUNDERS, OFFICES } from "@/data/site";
+import { ABOUT_STORY, FOUNDERS, OFFICES } from "@/data/site";
 import { CountUp, Reveal, Section, SectionLabel } from "@/components/site/primitives";
 // import { CtaBand } from "@/components/site/CtaBand";
 import {
@@ -694,77 +694,8 @@ function AboutPage() {
         </div>
       </Section>
 
-      <CompanyVideo />
-
       {/* <CtaBand /> */}
     </>
-  );
-}
-
-function CompanyVideo() {
-  // The office photo stands in as the poster until the visitor chooses to play.
-  const [playing, setPlaying] = useState(false);
-
-  return (
-    <section className="overflow-hidden">
-      <div className="mx-auto grid max-w-[1440px] items-center gap-10 lg:grid-cols-2">
-        <div className="px-5 pt-12 sm:px-8 lg:py-16 lg:pl-[max(2rem,calc((100vw-1200px)/2))]">
-          <SectionLabel>Get to Know WorthPrime</SectionLabel>
-          <h2 className={cn("mt-4 text-[clamp(1.9rem,3.4vw,2.8rem)]", HEADING)}>
-            Meet the People Behind the Expertise.
-          </h2>
-          <p className="mt-5 max-w-lg text-sm text-muted-foreground">
-            A closer look into our approach, our values and our commitment to helping clients make
-            informed financial decisions.
-          </p>
-          <button
-            type="button"
-            onClick={() => setPlaying(true)}
-            className="group mt-6 flex items-center gap-4 text-left"
-          >
-            <span className="grid size-12 place-items-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:scale-105">
-              <Play className="size-5" aria-hidden />
-            </span>
-            <span className="text-sm font-semibold text-primary">Play Company Video</span>
-          </button>
-        </div>
-        <div className="relative aspect-[16/10] w-full bg-primary lg:aspect-auto lg:h-[340px]">
-          {playing ? (
-            <video
-              src={COMPANY_VIDEO.src}
-              title={COMPANY_VIDEO.title}
-              controls
-              autoPlay
-              playsInline
-              onEnded={() => setPlaying(false)}
-              className="h-full w-full object-contain"
-            />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setPlaying(true)}
-              aria-label={`Play ${COMPANY_VIDEO.title}`}
-              className="group block h-full w-full"
-            >
-              <img
-                src={aboutHeroImage}
-                alt=""
-                width={1672}
-                height={941}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-              <span
-                className="absolute top-1/2 left-1/2 grid size-18 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary/85 text-primary-foreground ring-8 ring-primary-foreground/25 backdrop-blur-sm transition-transform group-hover:scale-105 sm:size-20"
-                aria-hidden
-              >
-                <Play className="ml-1 size-7 fill-current" />
-              </span>
-            </button>
-          )}
-        </div>
-      </div>
-    </section>
   );
 }
 

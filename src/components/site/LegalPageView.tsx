@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { LINKS, OFFICES, type LegalPage } from "@/data/site";
 import { Container } from "./primitives";
-import { PricingMarquee } from "./PricingMarquee";
 
 const sectionId = (heading: string) =>
   heading
@@ -42,8 +41,6 @@ export function LegalPageView({
           )}
         </Container>
       </section>
-
-      <PricingMarquee />
 
       <Container className="py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
