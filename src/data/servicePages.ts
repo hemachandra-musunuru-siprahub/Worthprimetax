@@ -499,7 +499,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
           title: "Internal Controls & IT Assurance",
           items: [
             "Reporting on Effectiveness of Internal control including SOX",
-            "IT Audit: SOC 2 Type 1 and Type 2 reporting",
+            "IT Audit: SOC 2 Type 1 and SOC 2 Type 2 reporting",
           ],
         },
       ],
