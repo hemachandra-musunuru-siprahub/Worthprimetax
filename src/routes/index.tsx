@@ -1276,19 +1276,12 @@ function Faq() {
       />
       <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
         <div>
-          <h2 className="font-serif text-[clamp(2rem,3.6vw,3.1rem)] leading-[1.04] font-bold tracking-[-0.02em] text-primary">
-            Questions, <span className="block text-brand-secondary">Answered.</span>
+          <h2 className="font-serif text-[clamp(1.75rem,3.2vw,3.1rem)] leading-[1.04] font-bold tracking-[-0.02em] whitespace-nowrap text-primary">
+            Questions, <span className="text-brand-secondary">Answered.</span>
           </h2>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-foreground/80 sm:text-base">
             {FAQ_INTRO}
           </p>
-          <Link
-            to="/"
-            hash="contact-form"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_14px_30px_-18px] shadow-primary/70 transition-transform hover:scale-[1.03]"
-          >
-            Contact Us <ArrowRight className="size-4" aria-hidden />
-          </Link>
           <FaqIllustration className="mt-5 hidden max-w-[14rem] lg:block" />
         </div>
 
