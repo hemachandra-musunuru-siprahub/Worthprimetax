@@ -180,7 +180,7 @@ export const SERVICES: Service[] = [
       "Financial Statement Compilation and Preparation services",
       "Financial reporting and management Reviews",
       "Reporting on Effectiveness of Internal control including SOX",
-      "IT Audit: SOC 2 Type 1 and Type 2 reporting",
+      "IT Audit: SOC 2 Type 1 and SOC 2 Type 2 reporting",
     ],
     cardCapabilityCount: 6,
     whoFor: "Companies preparing for private equity funding, lenders or statutory reporting.",
