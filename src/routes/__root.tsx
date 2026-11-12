@@ -17,6 +17,7 @@ import { siteJsonLd } from "../lib/seo";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { ContactCluster } from "@/components/site/ContactCluster";
+import { GlossaryTooltips } from "@/components/site/GlossaryTooltips";
 
 function NotFoundComponent() {
   return (
@@ -155,6 +156,7 @@ function RootComponent() {
       </main>
       <Footer />
       <ContactCluster />
+      <GlossaryTooltips />
     </QueryClientProvider>
   );
 }
