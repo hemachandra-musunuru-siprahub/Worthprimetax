@@ -228,3 +228,49 @@
     animation: none;
   }
 }
+
+/* Glossary keyword tooltips (src/components/site/GlossaryTooltips.tsx) */
+.wp-term {
+  cursor: help;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+  text-underline-offset: 3px;
+  border-radius: 2px;
+}
+.wp-term:hover,
+.wp-term[aria-expanded="true"] {
+  text-decoration-color: currentColor;
+}
+.wp-term:focus-visible {
+  outline: 2px solid var(--theme-focus-ring);
+  outline-offset: 2px;
+}
+.wp-tip {
+  position: fixed;
+  z-index: 100;
+  max-width: min(20rem, calc(100vw - 1rem));
+  padding: 0.75rem 0.875rem;
+  background: var(--theme-surface);
+  color: var(--theme-text);
+  border: 1px solid var(--theme-border);
+  border-top: 3px solid var(--theme-primary);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 28px -8px color-mix(in srgb, var(--theme-primary) 28%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: left;
+}
+.wp-tip[hidden] {
+  display: none;
+}
+.wp-tip-term {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  color: var(--theme-heading);
+}
+.wp-tip-text {
+  margin: 0;
+}
