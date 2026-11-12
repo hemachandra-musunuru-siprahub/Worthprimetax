@@ -367,6 +367,7 @@ export const CLIENT_EXPERIENCE = {
     sources: [
       "/video/What%20Clients%20Say%20us.mp4",
       "/video/What%20Clients%20Say..mp4",
+      "/video/What%20Clients%20Say3.mp4",
     ] as string[],
     pendingNote: "[Video, client to supply]",
   },

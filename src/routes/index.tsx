@@ -1152,7 +1152,7 @@ function VideoTestimonial() {
 
   return (
     <div className="flex min-w-0 flex-col rounded-2xl border border-brand-secondary/15 bg-card p-3 shadow-[0_24px_60px_-36px] shadow-primary/40 sm:p-4">
-      <div className="relative aspect-video overflow-hidden rounded-xl bg-primary">
+      <div className="relative aspect-video overflow-hidden rounded-xl bg-[var(--brand-black)]">
         {src && playing ? (
           <video
             src={src}
@@ -1160,7 +1160,7 @@ function VideoTestimonial() {
             autoPlay
             playsInline
             onEnded={() => setPlaying(false)}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
           />
         ) : (
           <>
@@ -1176,7 +1176,7 @@ function VideoTestimonial() {
                 aria-hidden
                 tabIndex={-1}
                 onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             )}
             <button
