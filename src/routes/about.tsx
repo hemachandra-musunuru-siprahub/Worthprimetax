@@ -60,7 +60,7 @@ const PILLARS = [
 ];
 
 // Landmark drawing per office, in OFFICES order.
-const OFFICE_LANDMARKS = [StatueOfLiberty, BurjKhalifa, IndiaGate];
+const OFFICE_LANDMARKS = [StatueOfLiberty, StatueOfLiberty];
 
 /*
  * World land for the dotted map, generated from Natural Earth 1:110m land (public domain):
@@ -440,11 +440,10 @@ const toGrid = (lon: number, lat: number) => ({
   y: (75 - lat) / 2.5,
 });
 
-// Office pins in OFFICES order: Glastonbury, Dubai, Hyderabad.
+// Office pins in OFFICES order: Glastonbury, Racine.
 const PINS = [
-  { name: "USA", ...toGrid(-72.6, 41.7), labelBelow: false },
-  { name: "UAE", ...toGrid(55.3, 25.2), labelBelow: true },
-  { name: "India", ...toGrid(78.5, 17.4), labelBelow: false },
+  { name: "Glastonbury", ...toGrid(-72.6, 41.7), labelBelow: false },
+  { name: "Racine", ...toGrid(-87.8, 42.7), labelBelow: true },
 ];
 
 export const Route = createFileRoute("/about")({
@@ -565,7 +564,7 @@ function AboutPage() {
             icon={Trophy}
           />
           <Stat value={<CountUp value={500} suffix="+" />} label="Satisfied Clients" icon={Users} />
-          <Stat value={<CountUp value={3} />} label="Global Offices" icon={MapPin} />
+          <Stat value={<CountUp value={2} />} label="U.S. Offices" icon={MapPin} />
           <Stat value="End-to-end" label="Tax & Compliance Support" icon={FileText} />
         </dl>
       </section>
@@ -663,8 +662,8 @@ function AboutPage() {
               Local Understanding. Global Perspective.
             </h2>
             <p className="mt-5 text-sm text-muted-foreground">
-              With offices in the U.S., UAE and India, we bring a global outlook and local insight
-              to serve individuals and businesses across borders.
+              From our U.S. offices, we bring a global outlook and local insight to serve
+              individuals and businesses across borders.
             </p>
           </div>
           <PresenceMap />
@@ -749,7 +748,7 @@ function PresenceMap() {
       className="relative w-full"
       style={{ aspectRatio: `${MAP_COLS} / ${MAP_ROWS}` }}
       role="img"
-      aria-label="World map with offices in the USA, UAE and India"
+      aria-label="World map with our offices in Glastonbury, CT and Racine, WI"
     >
       <svg
         className="absolute inset-0 size-full"
@@ -827,32 +826,6 @@ function StatueOfLiberty() {
       <path d="M13 22l-2 5 3 1M18 24l1 6M21 25l-1 7" />
       {/* pedestal */}
       <path d="M12 35h16v4H12zM10 39h20v6H10zM16 41h8" />
-    </LandmarkSvg>
-  );
-}
-
-function BurjKhalifa() {
-  return (
-    <LandmarkSvg>
-      <path d="M20 2v6" />
-      <path d="M18.5 8h3l1 8 1.5 1 1 9 2 1 1 10 2 1v7H10v-7l2-1 1-10 2-1 1-9 1.5-1z" />
-      <path d="M20 10v35M16.5 18v27M23.5 18v27M13 28v17M27 28v17" />
-      <path d="M6 45h28" />
-    </LandmarkSvg>
-  );
-}
-
-function IndiaGate() {
-  return (
-    <LandmarkSvg>
-      {/* cornice and dome */}
-      <path d="M17 8c0-2 1.5-3.5 3-3.5s3 1.5 3 3.5M14 8h12M12 11h16" />
-      {/* main block with arch */}
-      <path d="M8 14h24v4H8zM9 18h22v26H9z" />
-      <path d="M15 44V30c0-3 2.2-5 5-5s5 2 5 5v14" />
-      {/* side panels */}
-      <path d="M11 22v4h2v-4zM27 22v4h2v-4zM11 32v8M29 32v8" />
-      <path d="M5 44h30" />
     </LandmarkSvg>
   );
 }

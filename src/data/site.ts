@@ -67,15 +67,9 @@ export const OFFICES = [
     address: "2389 Main St, Ste. 100, Glastonbury, CT 06033",
   },
   {
-    label: "Branch Office (UAE)",
-    region: "United Arab Emirates",
-    address: "The Meydan Hotel, Grandstand, 6th floor, Meydan Road, Nad Al Sheba, Dubai, UAE",
-  },
-  {
-    label: "Branch Office (India)",
-    region: "India",
-    address:
-      "Victory plaza, Sabza Colony, Brindavan Colony, Toli Chowki, Hyderabad, Telangana 500008",
+    label: "Branch Office (USA)",
+    region: "United States",
+    address: "2700 Anthony Ln, Unit 17, Racine, WI 53404",
   },
 ];
 

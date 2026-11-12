@@ -92,7 +92,7 @@ function ContactPage() {
             </ul>
           </div>
 
-          <ul className="mt-3 grid gap-3 lg:grid-cols-3 lg:gap-4">
+          <ul className="mt-3 grid gap-3 lg:grid-cols-2 lg:gap-4">
             {OFFICES.map((office) => (
               <li
                 key={office.label}
